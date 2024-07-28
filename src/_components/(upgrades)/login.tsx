@@ -2,18 +2,18 @@
 
 import { useModalStore } from "@/hooks/useStore";
 
-export default function SignUp() {
+export default function Login() {
   const { setCurrentModalstep } = useModalStore();
 
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
       <h2 className="excon mb-[30px] max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:text-[48px] lg:leading-[49px]">
-        Hello there,
+        Welcome,
       </h2>
 
       <p className="mb-[37px] text-base leading-5 md:text-[24px] lg:leading-[25px]">
-        Unlock memory's power! Sign up for QuickMnemo and unleash your
-        potential. Learn. Remember. Achieve. ✨
+        Sign in to your QuickMnemo account and continue your memorization
+        journey
       </p>
 
       <div className="mb-[30px] flex h-[85px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7]">
@@ -48,10 +48,7 @@ export default function SignUp() {
         </span>
       </div>
 
-      <div
-        className="mb-[30px] flex h-[85px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7]"
-        onClick={() => setCurrentModalstep("Payment")}
-      >
+      <div className="mb-[30px] flex h-[85px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7]">
         <svg
           width="25"
           height="25"
@@ -85,9 +82,9 @@ export default function SignUp() {
 
       <p
         className="mb-[66px] cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]"
-        onClick={() => setCurrentModalstep("Login")}
+        onClick={() => setCurrentModalstep("Signup")}
       >
-        Have an account? Login here
+        Dont't have an account? Signup here
       </p>
     </div>
   );

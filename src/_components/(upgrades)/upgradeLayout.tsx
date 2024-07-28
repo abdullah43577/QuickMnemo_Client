@@ -3,14 +3,11 @@
 import { useModalStore } from "@/hooks/useStore";
 import Upgrade from "./upgrade";
 import SignUp from "./signup";
+import Login from "./login";
+import Payment from "./payment";
 
 export default function UpgradeLayout() {
   const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
-
-  const steps = {
-    upgrade: <Upgrade />,
-    signup: <SignUp />,
-  };
 
   return (
     <>
@@ -35,8 +32,10 @@ export default function UpgradeLayout() {
           </svg>
         </div>
 
-        <Upgrade />
-        {/* <SignUp /> */}
+        {currentModalStep === "Upgrade" && <Upgrade />}
+        {currentModalStep === "Signup" && <SignUp />}
+        {currentModalStep === "Login" && <Login />}
+        {currentModalStep === "Payment" && <Payment />}
       </div>
 
       <div

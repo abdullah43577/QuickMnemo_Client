@@ -7,7 +7,7 @@ export default function Header() {
   const pathname = usePathname();
   return (
     <header className="shadow-sm">
-      <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 pb-[5px] pt-[9px] md:pb-5 md:pt-[41px] 2xl:px-[162px]">
+      <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 pb-5 pt-6 md:pb-5 md:pt-[41px] 2xl:px-[162px]">
         <Link
           href="/"
           className="excon bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-[25px] font-[900] text-transparent"
@@ -113,10 +113,10 @@ export default function Header() {
         </div>
 
         {/* hamburger */}
-        <div className="lg:hidden">
-          <div className="h-[2px] w-[19.26px] rounded-lg bg-black"></div>
-          <div className="my-[2.41px] h-[2px] w-[19.26px] rounded-lg bg-black"></div>
-          <div className="h-[2px] w-[19.26px] rounded-lg bg-black"></div>
+        <div className="flex flex-col items-center gap-1 lg:hidden">
+          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
+          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
+          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
         </div>
       </nav>
     </header>

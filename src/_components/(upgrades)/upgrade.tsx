@@ -1,11 +1,18 @@
+"use client";
+
+import { useModalStore } from "@/hooks/useStore";
+
 export default function Upgrade() {
+  const { setCurrentModalstep } = useModalStore();
   const features = [
     {
       feature: "Generate more memorable answers",
     },
 
     { feature: "Make it sound anyhow you like, fun? educative?" },
-    { feature: "Support the team behind Quickmnemo" },
+    {
+      feature: `Support the <span class="text-black underline">team</span> behind Quickmnemo`,
+    },
   ];
 
   return (
@@ -71,14 +78,18 @@ export default function Upgrade() {
               </defs>
             </svg>
 
-            <span className="text-base font-[500] leading-5 lg:text-[24px]">
-              {ft.feature}
-            </span>
+            <span
+              className="text-base font-[500] leading-5 lg:text-[24px]"
+              dangerouslySetInnerHTML={{ __html: ft.feature }}
+            />
           </div>
         ))}
       </div>
 
-      <button className="mb-[43px] h-[50px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:mb-[70px] lg:h-[85px] lg:text-xl">
+      <button
+        className="mb-[43px] h-[50px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:mb-[70px] lg:h-[85px] lg:text-xl"
+        onClick={() => setCurrentModalstep("Signup")}
+      >
         Upgrade for just ₦950 per month
       </button>
     </div>
