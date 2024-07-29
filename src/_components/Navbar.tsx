@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="shadow-md">
+    <header className="border-navBorder border-b">
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 pb-5 pt-6 md:pb-5 md:pt-[41px] 2xl:px-[162px]">
         <Link
           href="/"

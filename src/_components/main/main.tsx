@@ -67,7 +67,7 @@ export default function WindowMain() {
 
   return (
     <>
-      <section className="mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-md lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
+      <section className="shadow-mainDrop mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
         <aside className="max-w-full flex-1">
           <h5 className="mb-6 text-center lg:mb-5 lg:text-xl">
             What's your key-letters?
