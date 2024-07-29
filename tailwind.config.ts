@@ -20,7 +20,7 @@ const config: Config = {
         overlay: "rgba(0, 0, 0, 0.3)",
       },
       boxShadow: {
-        inputDrop: "0 0 0 3px rgba(131, 56, 236, 0.15)",
+        inputDrop: "0px 0px 0px 3px rgba(131, 56, 236, 0.15)",
       },
     },
   },

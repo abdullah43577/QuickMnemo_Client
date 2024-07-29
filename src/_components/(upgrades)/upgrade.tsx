@@ -17,14 +17,14 @@ export default function Upgrade() {
 
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-[30px] max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Upgrade to QuickMnemo{" "}
         <span className="excon relative -top-2 rounded-[11px] bg-gradient-to-r from-[#8338EC] to-[#CB38E7] px-[7px] py-[9px] text-xl leading-[36px] -tracking-[5.5%] text-white">
           Plus
         </span>
       </h2>
 
-      <p className="mb-[37px] text-base font-[500] leading-5 lg:text-[24px] lg:leading-[25px]">
+      <p className="mb-[27.5px] text-base font-[500] leading-5 lg:mb-[37px] lg:text-[24px] lg:leading-[25px]">
         Quickmnemo plus gives you access to exciting features to help you
         memorize better
       </p>

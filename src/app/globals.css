@@ -18,24 +18,45 @@
   font-family: "Excon", sans-serif;
 }
 
-.mnemonics_wrapper::-webkit-scrollbar {
-  /* width: 1px; Set the width of the scrollbar */
+html,
+body {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
   display: none;
 }
 
-/* Track */
-.mnemonics_wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Set the color of the track (the area behind the thumb) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-/* Handle */
-.mnemonics_wrapper::-webkit-scrollbar-thumb {
-  background: #888; /* Set the color of the thumb (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #888;
   border-radius: 15px;
 }
 
-/* Handle on hover */
-.mnemonics_wrapper::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Set the color of the thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
   cursor: grab;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.generated_mnemo_active {
+  background: transparent;
+  background-image: linear-gradient(90deg, white, white),
+    linear-gradient(90deg, #eca438, #cb38e7, #8338ec, #ec3838, #c838ec, #ec3879);
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+  border: 1px solid transparent;
 }

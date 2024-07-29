@@ -1,6 +1,13 @@
 import { create } from "zustand";
 
-type ModalSteps = "Upgrade" | "Signup" | "Login" | "Payment" | "VerifyToken";
+type ModalSteps =
+  | "Upgrade"
+  | "Signup"
+  | "SignupTemplate"
+  | "Login"
+  | "Payment"
+  | "VerifyToken"
+  | "Success";
 
 interface ModalState {
   isModalOpen: boolean;

@@ -7,16 +7,19 @@ export default function SignUp() {
 
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-[30px] max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Hello there,
       </h2>
 
-      <p className="mb-[37px] text-base leading-5 md:text-[24px] lg:leading-[25px]">
+      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[37px] lg:leading-[25px]">
         Unlock memory's power! Sign up for QuickMnemo and unleash your
         potential. Learn. Remember. Achieve. ✨
       </p>
 
-      <div className="mb-[30px] flex h-[85px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7]">
+      <div
+        className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]"
+        onClick={() => setCurrentModalstep("Payment")}
+      >
         <svg
           width="25"
           height="25"
@@ -49,27 +52,27 @@ export default function SignUp() {
       </div>
 
       <div
-        className="mb-[30px] flex h-[85px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7]"
-        onClick={() => setCurrentModalstep("Payment")}
+        className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]"
+        onClick={() => setCurrentModalstep("SignupTemplate")}
       >
         <svg
-          width="25"
-          height="25"
-          viewBox="0 0 25 25"
+          width="22"
+          height="23"
+          viewBox="0 0 22 23"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M18.4581 22.2626C17.3025 23.3829 16.0407 23.206 14.8261 22.6754C13.5408 22.1329 12.3615 22.1093 11.0054 22.6754C9.30733 23.4065 8.41112 23.1942 7.39698 22.2626C1.64236 16.3311 2.4914 7.29827 9.02432 6.96808C10.6163 7.05063 11.7247 7.84071 12.6563 7.91146C14.0478 7.62845 15.3803 6.81479 16.8662 6.92092C18.6468 7.06242 19.9911 7.76996 20.8755 9.04352C17.1964 11.2487 18.069 16.0953 21.4416 17.4514C20.7694 19.2202 19.8968 20.9773 18.4463 22.2744L18.4581 22.2626ZM12.5384 6.89733C12.3615 4.26766 14.4959 2.09788 16.9487 1.88562C17.2907 4.92802 14.1893 7.19214 12.5384 6.89733Z"
-            fill="url(#paint0_linear_740_545)"
+            d="M2.75016 3.25H19.2502C19.4933 3.25 19.7264 3.34658 19.8983 3.51849C20.0703 3.69039 20.1668 3.92355 20.1668 4.16667V18.8333C20.1668 19.0764 20.0703 19.3096 19.8983 19.4815C19.7264 19.6534 19.4933 19.75 19.2502 19.75H2.75016C2.50705 19.75 2.27389 19.6534 2.10198 19.4815C1.93007 19.3096 1.8335 19.0764 1.8335 18.8333V4.16667C1.8335 3.92355 1.93007 3.69039 2.10198 3.51849C2.27389 3.34658 2.50705 3.25 2.75016 3.25ZM11.0552 11.2094L5.1775 6.21817L3.99041 7.61517L11.0671 13.6239L18.0163 7.61058L16.8173 6.22367L11.0552 11.2094Z"
+            fill="url(#paint0_linear_986_371)"
           />
           <defs>
             <linearGradient
-              id="paint0_linear_740_545"
-              x1="9.0952"
-              y1="6.92221"
-              x2="16.0533"
-              y2="6.92221"
+              id="paint0_linear_986_371"
+              x1="7.51126"
+              y1="7.16468"
+              x2="14.6436"
+              y2="7.16468"
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="#8338EC" />
@@ -79,12 +82,12 @@ export default function SignUp() {
         </svg>
 
         <span className="text-base font-[500] leading-5 md:text-[25px]">
-          Sign up with Apple
+          Continue with Mail
         </span>
       </div>
 
       <p
-        className="mb-[66px] cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]"
+        className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pb-[66px] text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]"
         onClick={() => setCurrentModalstep("Login")}
       >
         Have an account? Login here
