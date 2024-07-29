@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <header className="border-navBorder border-b">
+    <header className="border-navBorder relative border-b">
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 pb-5 pt-6 md:pb-5 md:pt-[41px] 2xl:px-[162px]">
         <Link
           href="/"
@@ -139,7 +139,7 @@ export default function Header() {
           height: isNavOpen ? "auto" : 0,
         }}
         transition={{ duration: 0.5 }}
-        className={`overflow-hidden lg:hidden`}
+        className="absolute z-50 w-full overflow-hidden bg-white lg:hidden"
       >
         <nav className="mt-[33px] flex flex-col gap-[18px] px-5 pb-[25px]">
           <Link

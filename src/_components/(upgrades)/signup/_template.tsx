@@ -16,7 +16,7 @@ export default function SignUpTemplate() {
           </label>
           <input
             type="email"
-            className="drop-shadow-inputDrop mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center uppercase text-black outline-[#8338EC] lg:min-w-full"
+            className="focus:shadow-inputDrop mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-[#8338EC] lg:min-w-full"
           />
         </div>
 
@@ -26,7 +26,7 @@ export default function SignUpTemplate() {
           </label>
           <input
             type="password"
-            className="drop-shadow-inputDrop mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center uppercase text-black outline-[#8338EC] lg:min-w-full"
+            className="focus:shadow-inputDrop mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-[#8338EC] lg:min-w-full"
           />
         </div>
       </div>
