@@ -57,13 +57,13 @@ export default function WindowMain() {
     <>
       <section className="mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-md lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
         <aside className="max-w-full flex-1">
-          <h5 className="mb-6 text-center text-base lg:mb-5 lg:text-xl">
+          <h5 className="mb-6 text-center lg:mb-5 lg:text-xl">
             What's your key-letters?
           </h5>
 
           <input
             type="text"
-            className="focus:shadow-inputDrop mb-6 h-[70px] w-full rounded-[15px] border px-5 text-center uppercase text-black outline-none focus:border-[#8338EC] lg:mb-[63.78px] lg:min-w-full"
+            className="focus:shadow-inputDrop mb-6 h-[50px] w-full rounded-[15px] border px-5 text-center uppercase text-black outline-none focus:border-[#8338EC] lg:mb-[63.78px] lg:h-[70px] lg:min-w-full"
             placeholder="HSRZ"
           />
 
@@ -188,7 +188,7 @@ export default function WindowMain() {
             </span>
           </div>
 
-          <button className="h-[62.07px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:text-xl">
+          <button className="h-[50px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
             Start generator
           </button>
         </aside>
@@ -199,7 +199,7 @@ export default function WindowMain() {
           {mnemo.map((obj, index) => (
             <div
               key={index}
-              className={`relative mb-[25px] flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] text-xl font-[500] leading-[20px] lg:w-[440px] ${obj.isClicked && "generated_mnemo_active"}`}
+              className={`relative mb-[25px] flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-[500] leading-[20px] lg:w-[440px] lg:text-xl ${obj.isClicked && "generated_mnemo_active"}`}
               onClick={() => handleMnemoClick(index)}
             >
               <div className="absolute left-0 top-0">

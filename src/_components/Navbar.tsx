@@ -114,9 +114,9 @@ export default function Header() {
 
         {/* hamburger */}
         <div className="flex flex-col items-center gap-1 lg:hidden">
-          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
-          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
-          <div className="h-[2px] w-[25px] rounded-lg bg-black"></div>
+          <div className="h-[2px] w-[19.26px] rounded-lg bg-black"></div>
+          <div className="h-[2px] w-[19.26px] rounded-lg bg-black"></div>
+          <div className="h-[2px] w-[19.26px] rounded-lg bg-black"></div>
         </div>
       </nav>
     </header>
