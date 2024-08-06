@@ -2,19 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useHeaderState } from "@/hooks/useStore";
 
 export default function Header() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const pathname = usePathname();
+  const { isScrolled, setIsScrolled } = useHeaderState();
 
   const handleNavClick = function () {
     setIsNavOpen(!isNavOpen);
   };
 
+  const handleScroll = function () {
+    if (window.scrollY > 0) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    //* handle scroll event
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="border-navBorder relative border-b">
+    <header
+      className={`border-b border-navBorder ${isScrolled ? "fixed left-0 top-0 z-10 w-full bg-white" : "relative"}`}
+    >
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-5 pb-5 pt-6 md:pb-5 md:pt-[41px] 2xl:px-[162px]">
         <Link
           href="/"

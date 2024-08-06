@@ -4,7 +4,9 @@ import Image from "next/image";
 import ellipse from "../../../public/ellipse.png";
 import { useEffect, useState } from "react";
 import UpgradeLayout from "../(upgrades)/upgradeLayout";
-import { useModalStore } from "@/hooks/useStore";
+import { useModalStore, useAuthenticatedState } from "@/hooks/useStore";
+import { useSearchParams, useRouter } from "next/navigation";
+import api from "@/app/axiosInstance";
 
 interface Mnemonics {
   id: number;
@@ -13,7 +15,16 @@ interface Mnemonics {
 }
 
 export default function WindowMain() {
-  const { setIsModalOpen } = useModalStore();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const token = searchParams.get("token");
+  const flw_status = searchParams.get("status");
+  const flw_tx_ref = searchParams.get("tx_ref");
+  const flw_transact_id = searchParams.get("transaction_id");
+
+  const { setIsAuthenticated, isAuthenticated } = useAuthenticatedState();
+
+  const { setIsModalOpen, setCurrentModalstep } = useModalStore();
   const [categories, setCategories] = useState([
     {
       title: "Simple",
@@ -38,6 +49,48 @@ export default function WindowMain() {
 
   const [mnemo, setMnemo] = useState<Mnemonics[]>([]);
 
+  const handleMnemoClick = function (index: number) {
+    setMnemo((prevValue) =>
+      prevValue.map((item) =>
+        item.id === index
+          ? { ...item, isClicked: !item.isClicked }
+          : { ...item, isClicked: false },
+      ),
+    );
+  };
+
+  //* conditionally render the current modal window step
+  const authenticatedCallback = function () {
+    if (isAuthenticated) {
+      setCurrentModalstep("Payment");
+      setIsModalOpen();
+    } else {
+      setIsModalOpen();
+    }
+  };
+
+  useEffect(() => authenticatedCallback(), [isAuthenticated]);
+
+  //* Validate OAuth login, setting cookies...
+  const validateOAuthSession = async function () {
+    try {
+      const response = await api.post("/google/callback/validate-session", {
+        tokenId: { token },
+      });
+
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+        router.push("/");
+      }
+    } catch (error) {
+      console.error((error as any).response?.data?.error);
+    }
+  };
+
+  useEffect(() => {
+    if (token) validateOAuthSession();
+  }, [token]);
+
   useEffect(() => {
     setTimeout(() => {
       setMnemo([
@@ -55,19 +108,35 @@ export default function WindowMain() {
     }, 7000);
   }, []);
 
-  const handleMnemoClick = function (index: number) {
-    setMnemo((prevValue) =>
-      prevValue.map((item) =>
-        item.id === index
-          ? { ...item, isClicked: !item.isClicked }
-          : { ...item, isClicked: false },
-      ),
-    );
+  const handleModalOpen = function () {
+    authenticatedCallback();
   };
+
+  //* Validate Flutterwave payment
+  const validatePayment = async function () {
+    try {
+      const response = await api.post("/payment/callback", {
+        status: flw_status,
+        tx_ref: flw_tx_ref,
+        transaction_id: flw_transact_id,
+      });
+
+      if (response.status === 200) {
+        // payment successfull
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error((error as any).response?.data?.error);
+    }
+  };
+
+  useEffect(() => {
+    if (flw_status && flw_tx_ref && flw_transact_id) validatePayment();
+  }, [flw_status, flw_tx_ref, flw_transact_id]);
 
   return (
     <>
-      <section className="shadow-mainDrop mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
+      <section className="mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
         <aside className="max-w-full flex-1">
           <h5 className="mb-6 text-center lg:mb-5 lg:text-xl">
             What's your key-letters?
@@ -75,7 +144,7 @@ export default function WindowMain() {
 
           <input
             type="text"
-            className="focus:shadow-inputDrop mb-6 h-[50px] w-full rounded-[15px] border px-5 text-center uppercase text-black outline-none focus:border-[#8338EC] lg:mb-[63.78px] lg:h-[70px] lg:min-w-full"
+            className="mb-6 h-[50px] w-full rounded-[15px] border px-5 text-center uppercase text-black outline-none focus:border-[#8338EC] focus:shadow-inputDrop lg:mb-[63.78px] lg:h-[70px] lg:min-w-full"
             placeholder="HSRZ"
           />
 
@@ -131,7 +200,7 @@ export default function WindowMain() {
           {/* desktop version */}
           <div
             className="relative mb-[37.43px] hidden h-[95.11px] cursor-pointer items-center overflow-hidden rounded-[15px] border border-[#EDEAE7] md:flex"
-            onClick={setIsModalOpen}
+            onClick={handleModalOpen}
           >
             <span className="max-w-[272px] bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pl-[26px] text-[24px] leading-[26px] text-transparent">
               Upgrade to plus for more features
@@ -180,7 +249,7 @@ export default function WindowMain() {
           {/* mobile version */}
           <div
             className="mb-[26px] flex cursor-pointer items-center justify-center gap-[4.33px] md:hidden"
-            onClick={setIsModalOpen}
+            onClick={handleModalOpen}
           >
             <svg
               width="11"

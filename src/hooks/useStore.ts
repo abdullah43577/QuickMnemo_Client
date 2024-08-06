@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type ModalSteps =
   | "Upgrade"
@@ -23,3 +24,35 @@ export const useModalStore = create<ModalState>()((set) => ({
   setCurrentModalstep: (arg) =>
     set((state) => ({ currentModalStep: (state.currentModalStep = arg) })),
 }));
+
+interface HeaderState {
+  isScrolled: boolean;
+  setIsScrolled: (arg: boolean) => void;
+}
+
+export const useHeaderState = create<HeaderState>()((set) => ({
+  isScrolled: false,
+  setIsScrolled: (arg) =>
+    set((state) => ({ isScrolled: (state.isScrolled = arg) })),
+}));
+
+// persisted state
+interface Authenticated {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (auth: boolean) => void;
+}
+export const useAuthenticatedState = create<Authenticated>()(
+  persist(
+    (set) => ({
+      isAuthenticated: false,
+      setIsAuthenticated: (auth) =>
+        set((state) => ({
+          isAuthenticated: (state.isAuthenticated = auth),
+        })),
+    }),
+    {
+      name: "isAuthenticated",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);

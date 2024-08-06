@@ -1,9 +1,27 @@
 "use client";
 
 import { useModalStore } from "@/hooks/useStore";
+import api from "../../app/axiosInstance";
+import { useState } from "react";
 
 export default function Payment() {
   const { setCurrentModalstep } = useModalStore();
+  const [isFetching, setIsFetching] = useState(false);
+
+  const handlePayment = async function () {
+    try {
+      setIsFetching(true);
+      const response = await api.get("/payment");
+      const paymentLink = response.data.message;
+
+      window.open(paymentLink, "_self");
+
+      setIsFetching(false);
+    } catch (error) {
+      setIsFetching(false);
+      console.error((error as any).response?.data?.error);
+    }
+  };
 
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
@@ -17,8 +35,9 @@ export default function Payment() {
       </p>
 
       <button
-        className="mb-[25px] h-[60px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:h-[85px] lg:text-xl"
-        onClick={() => setCurrentModalstep("Signup")}
+        disabled={isFetching}
+        className={`mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[85px] lg:text-xl ${isFetching ? "bg-gray-400" : "border-[#4D10A3] bg-[#8338EC]"}`}
+        onClick={handlePayment}
       >
         I want to proceed to payment
       </button>
