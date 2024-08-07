@@ -51,7 +51,10 @@ export default function Login() {
         </div>
       </Link>
 
-      <div className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]">
+      <div
+        className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]"
+        onClick={() => setCurrentModalstep("LoginTemplate")}
+      >
         <svg
           width="22"
           height="23"

@@ -3,11 +3,12 @@
 import { useModalStore } from "@/hooks/useStore";
 import Upgrade from "./upgrade";
 import SignUp from "./signup/signup";
-import Login from "./login";
+import Login from "./login/login";
 import Payment from "./payment";
 import VerifyToken from "./verifyToken";
 import Success from "./success";
 import SignUpTemplate from "./signup/_template";
+import LoginTemplate from "./login/_template";
 
 export default function UpgradeLayout() {
   const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
@@ -19,7 +20,7 @@ export default function UpgradeLayout() {
       >
         <div
           className="ml-auto mr-5 mt-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:mr-[21px] lg:mt-[21px] lg:size-[50px]"
-          onClick={setIsModalOpen}
+          onClick={() => setIsModalOpen("close")}
         >
           <svg
             viewBox="0 0 20 20"
@@ -38,14 +39,15 @@ export default function UpgradeLayout() {
         {currentModalStep === "Signup" && <SignUp />}
         {currentModalStep === "SignupTemplate" && <SignUpTemplate />}
         {currentModalStep === "Login" && <Login />}
+        {currentModalStep === "LoginTemplate" && <LoginTemplate />}
         {currentModalStep === "Payment" && <Payment />}
         {currentModalStep === "VerifyToken" && <VerifyToken />}
         {currentModalStep === "Success" && <Success />}
       </div>
 
       <div
-        className={`bg-overlay absolute left-0 top-0 z-10 h-full w-full ${isModalOpen ? "block" : "hidden"}`}
-        onClick={setIsModalOpen}
+        className={`absolute left-0 top-0 z-10 h-full w-full bg-overlay ${isModalOpen ? "block" : "hidden"}`}
+        onClick={() => setIsModalOpen("close")}
       />
     </>
   );

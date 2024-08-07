@@ -6,20 +6,24 @@ type ModalSteps =
   | "Signup"
   | "SignupTemplate"
   | "Login"
+  | "LoginTemplate"
   | "Payment"
   | "VerifyToken"
   | "Success";
 
 interface ModalState {
   isModalOpen: boolean;
-  setIsModalOpen: () => void;
+  setIsModalOpen: (arg: "open" | "close") => void;
   currentModalStep: ModalSteps;
   setCurrentModalstep: (arg: ModalSteps) => void;
 }
 
 export const useModalStore = create<ModalState>()((set) => ({
   isModalOpen: false,
-  setIsModalOpen: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
+  setIsModalOpen: (arg) =>
+    set((state) => ({
+      isModalOpen: (state.isModalOpen = arg === "open" ? true : false),
+    })),
   currentModalStep: "Upgrade",
   setCurrentModalstep: (arg) =>
     set((state) => ({ currentModalStep: (state.currentModalStep = arg) })),

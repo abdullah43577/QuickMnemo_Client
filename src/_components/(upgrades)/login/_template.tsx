@@ -24,7 +24,7 @@ const credentialSchema = z.object({
 
 type FormValues = z.infer<typeof credentialSchema>;
 
-export default function SignUpTemplate() {
+export default function LoginTemplate() {
   const {
     register,
     handleSubmit,
@@ -32,21 +32,22 @@ export default function SignUpTemplate() {
   } = useForm<FormValues>({
     resolver: zodResolver(credentialSchema),
   });
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { setIsAuthenticated } = useAuthenticatedState();
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const registerUser = async function ({ email, password }: FormValues) {
+  const loginUser = async function ({ email, password }: FormValues) {
     try {
-      setIsRegistering(true);
+      setIsLoggingIn(true);
       const response = await api.post("/register", { email, password });
       if (response.status === 200) {
         toast("user logged in successfully!");
         setIsAuthenticated(true);
-        setIsRegistering(false);
+        setIsLoggingIn(false);
       }
     } catch (error) {
-      setIsRegistering(false);
+      setIsLoggingIn(false);
       toast((error as any).response?.data?.error);
       console.error((error as any).response?.data?.error);
     }
@@ -54,15 +55,15 @@ export default function SignUpTemplate() {
 
   return (
     <form
-      onSubmit={handleSubmit(registerUser)}
+      onSubmit={handleSubmit(loginUser)}
       className="p-5 lg:pl-[57px] lg:pr-[58px]"
     >
       <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
-        Sign up,
+        Login,
       </h2>
 
       <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[40px] lg:leading-[25px]">
-        Sign up with email to continue using QuickMnemo
+        Login with email to continue using QuickMnemo
       </p>
 
       <div>
@@ -138,10 +139,10 @@ export default function SignUpTemplate() {
       </div>
 
       <button
-        disabled={isRegistering}
-        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl ${isRegistering ? "border-gray-400" : "border-[#4D10A3] bg-[#8338EC]"}`}
+        disabled={isLoggingIn}
+        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl ${isLoggingIn ? "border-gray-400" : "border-[#4D10A3] bg-[#8338EC]"}`}
       >
-        Sign up
+        Login
       </button>
 
       <p className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pb-5 text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]">

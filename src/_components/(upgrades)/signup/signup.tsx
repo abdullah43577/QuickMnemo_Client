@@ -18,10 +18,7 @@ export default function SignUp() {
       </p>
 
       <Link href={`${process.env.NEXT_PUBLIC_API_URL}/google`}>
-        <div
-          className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]"
-          // onClick={() => setCurrentModalstep("Payment")}
-        >
+        <div className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]">
           <svg
             width="25"
             height="25"

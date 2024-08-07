@@ -69,7 +69,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/what-is-new"
+            href="/subscription"
             className="group flex cursor-pointer items-center gap-[10px]"
           >
             <svg
@@ -96,7 +96,7 @@ export default function Header() {
             <span
               className={`text-lg font-bold leading-5 ${pathname === "/what-is-new" ? "bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-transparent" : "group-hover:bg-gradient-to-r group-hover:from-[#8338EC] group-hover:to-[#CB38E7] group-hover:bg-clip-text group-hover:text-transparent"}`}
             >
-              What's New
+              Subscription
             </span>
           </Link>
 
@@ -187,7 +187,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/what-is-new"
+            href="/subscription"
             className="group flex cursor-pointer items-center gap-[10px]"
             onClick={handleNavClick}
           >
@@ -215,7 +215,7 @@ export default function Header() {
             <span
               className={`text-lg font-bold leading-5 ${pathname === "/what-is-new" ? "bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-transparent" : "group-hover:bg-gradient-to-r group-hover:from-[#8338EC] group-hover:to-[#CB38E7] group-hover:bg-clip-text group-hover:text-transparent"}`}
             >
-              What's New
+              Subscription
             </span>
           </Link>
 
