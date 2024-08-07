@@ -8,7 +8,6 @@ import { useModalStore, useAuthenticatedState } from "@/hooks/useStore";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/app/axiosInstance";
 import { toast } from "react-toastify";
-import { Suspense } from "react";
 
 interface Mnemonics {
   id: number;
@@ -148,7 +147,7 @@ export default function WindowMain() {
   }, [isPremium]);
 
   return (
-    <Suspense>
+    <>
       <section className="mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:h-[653px] lg:flex-row lg:overflow-hidden lg:p-[64px]">
         <aside className="max-w-full flex-1">
           <h5 className="mb-6 text-center lg:mb-5 lg:text-xl">
@@ -415,6 +414,6 @@ export default function WindowMain() {
 
       {/* Modal Window */}
       <UpgradeLayout />
-    </Suspense>
+    </>
   );
 }

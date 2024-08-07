@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/_components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "QuickMnemo",
@@ -18,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative pb-[52px]" suppressHydrationWarning={true}>
         <Header />
-        {children}
+        <Suspense fallback={null}>{children}</Suspense>
         <ToastContainer />
       </body>
     </html>
