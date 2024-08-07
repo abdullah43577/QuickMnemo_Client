@@ -39,16 +39,20 @@ export const useHeaderState = create<HeaderState>()((set) => ({
 // persisted state
 interface Authenticated {
   isAuthenticated: boolean;
+  isPremium: boolean;
   setIsAuthenticated: (auth: boolean) => void;
+  setIsPremium: () => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
     (set) => ({
       isAuthenticated: false,
+      isPremium: false,
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
         })),
+      setIsPremium: () => set((state) => ({ isPremium: true })),
     }),
     {
       name: "isAuthenticated",

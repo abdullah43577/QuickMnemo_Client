@@ -1,10 +1,6 @@
-"use client";
-
-import { useModalStore } from "@/hooks/useStore";
+import Link from "next/link";
 
 export default function Success() {
-  const { setCurrentModalstep, setIsModalOpen } = useModalStore();
-
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
       <svg
@@ -43,15 +39,11 @@ export default function Success() {
         to help you memorize and study better.
       </p>
 
-      <button
-        className="mb-[25px] h-[60px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:text-xl"
-        onClick={() => {
-          setIsModalOpen();
-          setCurrentModalstep("Upgrade");
-        }}
-      >
-        Start memorizing now
-      </button>
+      <Link href="/">
+        <button className="mb-[25px] h-[60px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:text-xl">
+          Start memorizing now
+        </button>
+      </Link>
     </div>
   );
 }

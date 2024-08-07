@@ -63,7 +63,7 @@ export default function SignUpTemplate() {
       </h2>
 
       <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[40px] lg:leading-[25px]">
-        Sign up Sign in with email to continue using QuickMnemo
+        Sign up with email to continue using QuickMnemo
       </p>
 
       <div>
