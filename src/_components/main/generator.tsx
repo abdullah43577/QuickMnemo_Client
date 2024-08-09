@@ -31,6 +31,13 @@ export function GenerateMnemonics() {
       setCategories((prevValue) =>
         prevValue.map((cateogry) => ({ ...cateogry, isLocked: false })),
       );
+    } else {
+      setCategories((prevValue) =>
+        prevValue.map((category, i) => {
+          if (i === 0) return category;
+          return { ...category, isLocked: true };
+        }),
+      );
     }
   }, [isPremium]);
 
