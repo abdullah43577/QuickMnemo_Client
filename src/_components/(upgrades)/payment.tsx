@@ -11,7 +11,7 @@ export default function Payment() {
   const handlePayment = async function () {
     try {
       setIsFetching(true);
-      const response = await api.get("/payment");
+      const response = await api.get("/subscribe");
       const paymentLink = response.data.message;
 
       window.open(paymentLink, "_self");

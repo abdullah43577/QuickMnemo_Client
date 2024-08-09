@@ -45,7 +45,7 @@ interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
   setIsAuthenticated: (auth: boolean) => void;
-  setIsPremium: () => void;
+  setIsPremium: (arg: boolean) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
@@ -56,7 +56,7 @@ export const useAuthenticatedState = create<Authenticated>()(
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
         })),
-      setIsPremium: () => set((state) => ({ isPremium: true })),
+      setIsPremium: (arg) => set((state) => ({ isPremium: arg })),
     }),
     {
       name: "isAuthenticated",
