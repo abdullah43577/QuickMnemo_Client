@@ -43,7 +43,7 @@ export default function Success() {
       </p>
 
       <button
-        className="mb-[25px] h-[60px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:text-xl"
+        className="border-btnBorder bg-CTA mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl"
         onClick={() => setIsModalOpen("close")}
       >
         Start memorizing now

@@ -17,6 +17,7 @@ const config: Config = {
 
     extend: {
       backgroundColor: {
+        CTA: "#8338EC",
         overlay: "rgba(0, 0, 0, 0.3)",
       },
 
@@ -27,6 +28,8 @@ const config: Config = {
 
       borderColor: {
         navBorder: "rgba(0, 0, 0, 0.05)",
+        btnBorder: "#4D10A3",
+        inputBorder: "#8338EC",
       },
     },
   },

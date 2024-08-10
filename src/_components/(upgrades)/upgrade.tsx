@@ -87,7 +87,7 @@ export default function Upgrade() {
       </div>
 
       <button
-        className="mb-[43px] h-[50px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:mb-[70px] lg:h-[85px] lg:text-xl"
+        className="border-btnBorder bg-CTA mb-[43px] h-[50px] w-full rounded-[15px] border text-base font-medium text-white lg:mb-[70px] lg:h-[85px] lg:text-xl"
         onClick={() => setCurrentModalstep("Signup")}
       >
         Upgrade for just ₦500 per month

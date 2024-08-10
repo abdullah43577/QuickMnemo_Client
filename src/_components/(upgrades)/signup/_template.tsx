@@ -73,7 +73,7 @@ export default function SignUpTemplate() {
           <div>
             <input
               type="email"
-              className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-[#8338EC] focus:shadow-inputDrop lg:min-w-full"
+              className="focus:border-inputBorder mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:shadow-inputDrop lg:min-w-full"
               {...register("email", { required: true })}
             />
             {errors.email && (
@@ -92,7 +92,7 @@ export default function SignUpTemplate() {
             <div>
               <input
                 type={isPasswordVisible ? "text" : "password"}
-                className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-[#8338EC] focus:shadow-inputDrop lg:min-w-full"
+                className="focus:border-inputBorder mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:shadow-inputDrop lg:min-w-full"
                 {...register("password", { required: true })}
               />
               {errors.password && (
@@ -139,7 +139,7 @@ export default function SignUpTemplate() {
 
       <button
         disabled={isRegistering}
-        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl ${isRegistering ? "border-gray-400" : "border-[#4D10A3] bg-[#8338EC]"}`}
+        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl ${isRegistering ? "border-gray-400" : "border-btnBorder] bg-CTA"}`}
       >
         Sign up
       </button>

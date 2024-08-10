@@ -5,7 +5,6 @@ import api from "../../app/axiosInstance";
 import { useState } from "react";
 
 export default function Payment() {
-  const { setCurrentModalstep } = useModalStore();
   const [isFetching, setIsFetching] = useState(false);
 
   const handlePayment = async function () {
@@ -36,18 +35,18 @@ export default function Payment() {
 
       <button
         disabled={isFetching}
-        className={`mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[85px] lg:text-xl ${isFetching ? "bg-gray-400" : "border-[#4D10A3] bg-[#8338EC]"}`}
+        className={`mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[85px] lg:text-xl ${isFetching ? "bg-gray-400" : "border-btnBorder bg-CTA"}`}
         onClick={handlePayment}
       >
         I want to proceed to payment
       </button>
 
-      <div
+      {/* <div
         className="mb-[90px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] text-base font-[500] leading-5 md:text-[25px] lg:h-[85px]"
         onClick={() => setCurrentModalstep("VerifyToken")}
       >
         I want to verify my token
-      </div>
+      </div> */}
     </div>
   );
 }

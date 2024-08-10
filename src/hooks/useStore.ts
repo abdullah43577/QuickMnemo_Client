@@ -8,8 +8,9 @@ type ModalSteps =
   | "Login"
   | "LoginTemplate"
   | "Payment"
-  | "VerifyToken"
-  | "Success";
+  | "Success"
+  | "Cancel Sub"
+  | "Cancel Sub Success";
 
 interface ModalState {
   isModalOpen: boolean;
@@ -44,19 +45,24 @@ export const useHeaderState = create<HeaderState>()((set) => ({
 interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
+  isSuccessShownAlready: boolean;
   setIsAuthenticated: (auth: boolean) => void;
   setIsPremium: (arg: boolean) => void;
+  setIsSucecssShownAlready: (arg: boolean) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
     (set) => ({
       isAuthenticated: false,
       isPremium: false,
+      isSuccessShownAlready: false,
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
         })),
-      setIsPremium: (arg) => set((state) => ({ isPremium: arg })),
+      setIsPremium: (arg) => set((_) => ({ isPremium: arg })),
+      setIsSucecssShownAlready: (arg) =>
+        set((_) => ({ isSuccessShownAlready: arg })),
     }),
     {
       name: "isAuthenticated",

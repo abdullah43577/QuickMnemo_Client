@@ -5,10 +5,10 @@ import Upgrade from "./upgrade";
 import SignUp from "./signup/signup";
 import Login from "./login/login";
 import Payment from "./payment";
-import VerifyToken from "./verifyToken";
 import Success from "./success";
 import SignUpTemplate from "./signup/_template";
 import LoginTemplate from "./login/_template";
+import CancelSubscription from "@/app/subscription/_components/cancel-sub";
 
 export default function UpgradeLayout() {
   const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
@@ -16,7 +16,7 @@ export default function UpgradeLayout() {
   return (
     <>
       <div
-        className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[644px] -translate-x-1/2 -translate-y-1/2 rounded-[20px] bg-white lg:w-auto ${isModalOpen ? "block" : "hidden"}`}
+        className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[644px] -translate-x-1/2 -translate-y-1/2 rounded-[25px] bg-white lg:w-auto lg:rounded-[20px] ${isModalOpen ? "block" : "hidden"}`}
       >
         <div
           className="ml-auto mr-5 mt-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:mr-[21px] lg:mt-[21px] lg:size-[50px]"
@@ -41,8 +41,8 @@ export default function UpgradeLayout() {
         {currentModalStep === "Login" && <Login />}
         {currentModalStep === "LoginTemplate" && <LoginTemplate />}
         {currentModalStep === "Payment" && <Payment />}
-        {currentModalStep === "VerifyToken" && <VerifyToken />}
         {currentModalStep === "Success" && <Success />}
+        {currentModalStep === "Cancel Sub" && <CancelSubscription />}
       </div>
 
       <div

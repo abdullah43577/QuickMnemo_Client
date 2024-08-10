@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react";
 
 export function GenerateMnemonics() {
   const { isPremium } = useAuthenticatedState();
-  const { setIsModalOpen } = useModalStore();
+  const { setIsModalOpen, setCurrentModalstep } = useModalStore();
   const [categories, setCategories] = useState([
     {
       title: "Simple",
@@ -61,7 +61,7 @@ export function GenerateMnemonics() {
         {categories.map((category) => (
           <div
             key={category.title}
-            className={`flex h-[50px] items-center justify-center rounded-[15px] border border-[#EDEAE7] ${category.isLocked ? "cursor-not-allowed items-center bg-[#EDEAE7]" : "cursor-pointer hover:bg-[#8338EC] hover:text-white"} flex-1 px-[31.5px] text-black lg:h-[65px] lg:px-[21.5px] ${category.isSelected && "border-[#4D10A3] bg-[#8338EC] text-white"}`}
+            className={`flex h-[50px] items-center justify-center rounded-[15px] border border-[#EDEAE7] ${category.isLocked ? "cursor-not-allowed items-center bg-[#EDEAE7]" : "hover:bg-CTA cursor-pointer hover:text-white"} flex-1 px-[31.5px] text-black lg:h-[65px] lg:px-[21.5px] ${category.isSelected && "bg-CTA border-btnBorder text-white"}`}
             onClick={() => handleClick(category.title)}
           >
             {category.isLocked ? (
@@ -106,7 +106,10 @@ export function GenerateMnemonics() {
       {!isPremium && (
         <div
           className="relative mb-[37.43px] hidden h-[95.11px] cursor-pointer items-center overflow-hidden rounded-[15px] border border-[#EDEAE7] md:flex"
-          onClick={() => setIsModalOpen("open")}
+          onClick={() => {
+            setIsModalOpen("open");
+            setCurrentModalstep("Upgrade");
+          }}
         >
           <span className="max-w-[272px] bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pl-[26px] text-[24px] leading-[26px] text-transparent">
             Upgrade to plus for more features
@@ -153,7 +156,10 @@ export function GenerateMnemonics() {
       {!isPremium && (
         <div
           className="mb-[26px] flex cursor-pointer items-center justify-center gap-[4.33px] md:hidden"
-          onClick={() => setIsModalOpen("open")}
+          onClick={() => {
+            setIsModalOpen("open");
+            setCurrentModalstep("Upgrade");
+          }}
         >
           <svg
             width="11"
@@ -174,7 +180,7 @@ export function GenerateMnemonics() {
         </div>
       )}
 
-      <button className="h-[50px] w-full rounded-[15px] border border-[#4D10A3] bg-[#8338EC] text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
+      <button className="border-btnBorder bg-CTA h-[50px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
         Start generator
       </button>
     </aside>

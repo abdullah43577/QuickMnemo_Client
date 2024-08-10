@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect } from "react";
-import UpgradeLayout from "../(upgrades)/upgradeLayout";
 import { useModalStore, useAuthenticatedState } from "@/hooks/useStore";
 import { useSearchParams } from "next/navigation";
 import { GenerateMnemonics } from "./generator";
@@ -24,19 +23,38 @@ export default function WindowMain() {
   const flw_tx_ref = searchParams.get("tx_ref");
   const flw_transact_id = searchParams.get("transaction_id");
 
-  const { isAuthenticated, isPremium } = useAuthenticatedState();
+  const {
+    isAuthenticated,
+    isPremium,
+    isSuccessShownAlready,
+    setIsSucecssShownAlready,
+  } = useAuthenticatedState();
 
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
 
   //* CONDITIONALLY RENDER CURRENT WINDOW STEP
   const cachedFn = useCallback(() => {
-    if (isAuthenticated && isPremium) return setIsModalOpen("close");
+    if (isAuthenticated && isPremium) {
+      if (isSuccessShownAlready) {
+        return setIsModalOpen("close");
+      } else {
+        setIsSucecssShownAlready(true);
+        setCurrentModalstep("Success");
+      }
+    }
 
     if (isAuthenticated) {
       setCurrentModalstep("Payment");
       setIsModalOpen("open");
     }
-  }, [isAuthenticated, isPremium, setIsModalOpen, setCurrentModalstep]);
+  }, [
+    isAuthenticated,
+    isPremium,
+    setIsModalOpen,
+    setCurrentModalstep,
+    isSuccessShownAlready,
+    setIsSucecssShownAlready,
+  ]);
 
   useEffect(() => cachedFn(), [isAuthenticated, cachedFn]);
 
@@ -52,9 +70,6 @@ export default function WindowMain() {
 
         <GeneratedMnemonics />
       </section>
-
-      {/* Modal Window */}
-      <UpgradeLayout />
     </>
   );
 }
