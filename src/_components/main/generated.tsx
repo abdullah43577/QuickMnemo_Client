@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import api from "@/app/axiosInstance";
 import { toast } from "react-toastify";
 import { useAuthenticatedState } from "@/hooks/useStore";
+import { handleErrors } from "@/utils/handleErrors";
 
 interface Mnemonics {
   id: number;
@@ -47,9 +48,9 @@ export function GeneratedMnemonics() {
       const response = await api.put("/save-mnemonics", {
         savedMnemonics,
       });
-      if (response.status === 200) toast(response.data.message);
+      if (response.status === 200) toast.success(response.data.message);
     } catch (error) {
-      console.error(error);
+      handleErrors(error);
     }
   };
 

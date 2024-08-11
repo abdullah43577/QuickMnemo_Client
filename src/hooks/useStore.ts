@@ -8,15 +8,24 @@ type ModalSteps =
   | "Login"
   | "LoginTemplate"
   | "Payment"
+  | "VerifyPayment"
   | "Success"
   | "Cancel Sub"
-  | "Cancel Sub Success";
+  | "Cancel Sub Success"
+  | "Delete Mnemonics";
 
 interface ModalState {
   isModalOpen: boolean;
   setIsModalOpen: (arg: "open" | "close") => void;
   currentModalStep: ModalSteps;
   setCurrentModalstep: (arg: ModalSteps) => void;
+  toast: {
+    show: boolean;
+    msg: string;
+  };
+  setShowToast: (arg: { show: boolean; msg: string }) => void;
+  toBeDeletedMnemonic: string;
+  setToBeDeletedMnemonic: (arg: string) => void;
 }
 
 export const useModalStore = create<ModalState>()((set) => ({
@@ -28,6 +37,10 @@ export const useModalStore = create<ModalState>()((set) => ({
   currentModalStep: "Upgrade",
   setCurrentModalstep: (arg) =>
     set((state) => ({ currentModalStep: (state.currentModalStep = arg) })),
+  toast: { show: false, msg: "" },
+  toBeDeletedMnemonic: "",
+  setShowToast: (arg) => set((_) => ({ toast: arg })),
+  setToBeDeletedMnemonic: (arg) => set((_) => ({ toBeDeletedMnemonic: arg })),
 }));
 
 interface HeaderState {
@@ -46,11 +59,13 @@ interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
   isSuccessShownAlready: boolean;
+  hasPaid: boolean;
   savedMnemonics: string[];
   setIsAuthenticated: (auth: boolean) => void;
   setIsPremium: (arg: boolean) => void;
-  setIsSucecssShownAlready: (arg: boolean) => void;
+  setIsSuccessShownAlready: (arg: boolean) => void;
   setSavedMnemonics: (arg: string[]) => void;
+  setHasPaid: (arg: boolean) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
@@ -59,14 +74,16 @@ export const useAuthenticatedState = create<Authenticated>()(
       isPremium: false,
       isSuccessShownAlready: false,
       savedMnemonics: [],
+      hasPaid: false,
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
         })),
       setIsPremium: (arg) => set((_) => ({ isPremium: arg })),
-      setIsSucecssShownAlready: (arg) =>
+      setIsSuccessShownAlready: (arg) =>
         set((_) => ({ isSuccessShownAlready: arg })),
       setSavedMnemonics: (arg) => set((_) => ({ savedMnemonics: arg })),
+      setHasPaid: (arg) => set((_) => ({ hasPaid: arg })),
     }),
 
     {

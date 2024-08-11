@@ -1,3 +1,4 @@
+import { handleErrors } from "@/utils/handleErrors";
 import axios from "axios";
 
 const api = axios.create({
@@ -28,10 +29,12 @@ api.interceptors.response.use(
 
         return api(originalRequest); // Retry the original request
       } catch (refreshError) {
+        handleErrors(refreshError);
         return Promise.reject(refreshError);
       }
     }
 
+    handleErrors(error);
     return Promise.reject(error);
   },
 );

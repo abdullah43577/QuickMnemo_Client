@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/_components/Navbar";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense } from "react";
 import UpgradeLayout from "@/_components/(upgrades)/upgradeLayout";
 import LayoutProvider from "@/_components/Provider";
+import { Toast } from "@/utils/toast";
 
 export const metadata: Metadata = {
   title: "QuickMnemo",
@@ -29,7 +30,13 @@ export default function RootLayout({
         </Suspense>
         {/* Modal Window */}
         <UpgradeLayout />
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          theme="dark"
+          transition={Zoom}
+        />
+        <Toast />
       </body>
     </html>
   );

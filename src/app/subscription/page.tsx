@@ -1,11 +1,11 @@
 "use client";
 
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { toast } from "react-toastify";
 import api from "../axiosInstance";
+import { handleErrors } from "@/utils/handleErrors";
 
 export default function Subscription() {
-  const { setCurrentModalstep, setIsModalOpen } = useModalStore();
+  const { setCurrentModalstep, setIsModalOpen, setShowToast } = useModalStore();
   const { isPremium } = useAuthenticatedState();
 
   const handleSubscription = async function () {
@@ -13,13 +13,13 @@ export default function Subscription() {
       const response = await api.get("/subscribe");
 
       if (response.data.type === "subscription_activated") {
-        toast(response.data.message);
+        setShowToast({ show: true, msg: response.data.message });
       } else {
         const paymentLink = response.data.message;
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      console.error((error as any).response?.data?.error);
+      handleErrors(error);
     }
   };
 
@@ -31,7 +31,7 @@ export default function Subscription() {
   return (
     <>
       <section>
-        <div className="mx-auto max-w-[1440px] items-center px-5 pt-[43px] 2xl:px-[162px]">
+        <div className="mx-auto max-w-[1440px] items-center px-5 pt-[18px] lg:pt-[43px] 2xl:px-[162px]">
           <div className="group mb-[53px] inline-flex cursor-pointer gap-[10px]">
             <svg
               width="22"
@@ -60,7 +60,7 @@ export default function Subscription() {
           </div>
 
           <button
-            className="border-btnBorder bg-CTA mb-5 block h-[50px] w-full rounded-[15px] font-semibold leading-[-0.8px] text-white md:w-[240px]"
+            className="mb-5 block h-[50px] w-full rounded-[15px] border-btnBorder bg-CTA font-semibold leading-[-0.8px] text-white md:w-[240px]"
             onClick={handleSubscription}
           >
             Renew or subscribe

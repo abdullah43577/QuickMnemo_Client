@@ -4,11 +4,13 @@ import { useModalStore } from "@/hooks/useStore";
 import Upgrade from "./upgrade";
 import SignUp from "./signup/signup";
 import Login from "./login/login";
-import Payment from "./payment";
+import Payment from "./payment/payment";
 import Success from "./success";
 import SignUpTemplate from "./signup/_template";
 import LoginTemplate from "./login/_template";
 import CancelSubscription from "@/app/subscription/_components/cancel-sub";
+import VerifyPayment from "./payment/verifyPayment";
+import { DeleteMnemo } from "@/app/saved-mnemo/_components/deleteMnemo";
 
 export default function UpgradeLayout() {
   const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
@@ -41,8 +43,10 @@ export default function UpgradeLayout() {
         {currentModalStep === "Login" && <Login />}
         {currentModalStep === "LoginTemplate" && <LoginTemplate />}
         {currentModalStep === "Payment" && <Payment />}
+        {currentModalStep === "VerifyPayment" && <VerifyPayment />}
         {currentModalStep === "Success" && <Success />}
         {currentModalStep === "Cancel Sub" && <CancelSubscription />}
+        {currentModalStep === "Delete Mnemonics" && <DeleteMnemo />}
       </div>
 
       <div

@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/app/axiosInstance";
-import { useAuthenticatedState } from "@/hooks/useStore";
-import { toast } from "react-toastify";
+import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
+import { handleErrors } from "@/utils/handleErrors";
 
 const passwordValidationRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
@@ -35,6 +35,7 @@ export default function LoginTemplate() {
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { setIsAuthenticated } = useAuthenticatedState();
+  const { setShowToast } = useModalStore();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const loginUser = async function ({ email, password }: FormValues) {
@@ -42,14 +43,13 @@ export default function LoginTemplate() {
       setIsLoggingIn(true);
       const response = await api.post("/register", { email, password });
       if (response.status === 200) {
-        toast("user logged in successfully!");
+        setShowToast({ show: true, msg: "Login successful" });
         setIsAuthenticated(true);
         setIsLoggingIn(false);
       }
     } catch (error) {
       setIsLoggingIn(false);
-      toast((error as any).response?.data?.error);
-      console.error((error as any).response?.data?.error);
+      handleErrors(error);
     }
   };
 
@@ -74,7 +74,7 @@ export default function LoginTemplate() {
           <div>
             <input
               type="email"
-              className="focus:border-inputBorder mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:shadow-inputDrop lg:min-w-full"
+              className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
               {...register("email", { required: true })}
             />
             {errors.email && (
@@ -93,7 +93,7 @@ export default function LoginTemplate() {
             <div>
               <input
                 type={isPasswordVisible ? "text" : "password"}
-                className="focus:border-inputBorder mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:shadow-inputDrop lg:min-w-full"
+                className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
                 {...register("password", { required: true })}
               />
               {errors.password && (

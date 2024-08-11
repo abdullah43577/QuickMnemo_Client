@@ -2,6 +2,7 @@
 
 import api from "@/app/axiosInstance";
 import { useModalStore } from "@/hooks/useStore";
+import { customId, handleErrors } from "@/utils/handleErrors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -13,21 +14,43 @@ export default function CancelSubscription() {
 
   const handleSubscription = async function () {
     try {
-      const response = await api.get("/subscribe");
+      const response = api.get("/subscribe");
 
-      if (response.data.type === "subscription_activated") {
-        toast(response.data.message);
+      toast.promise(
+        response,
+        {
+          pending: "Payment link processing",
+          success: "Payment link successfully processed",
+        },
+        { toastId: customId },
+      );
+
+      const { data } = await response;
+
+      if (data.type === "subscription_activated") {
+        toast.success(data.message, {
+          toastId: customId,
+        });
       } else {
-        const paymentLink = response.data.message;
+        const paymentLink = data.message;
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      console.error((error as any).response?.data?.error);
+      handleErrors(error);
     }
   };
 
   const handleCancelSubscription = async function () {
-    setIsCancelled(true);
+    try {
+      setIsCancelled(true);
+      const response = await api.put("subscription/cancel");
+      toast(response.data.message, {
+        toastId: customId,
+      });
+    } catch (error) {
+      setIsCancelled(false);
+      handleErrors(error);
+    }
   };
 
   const handleGoHome = function () {
@@ -48,7 +71,7 @@ export default function CancelSubscription() {
 
       <div className="flex items-center justify-between">
         <button
-          className="bg-CTA border-btnBorder h-[50px] w-[150px] rounded-[15px] border font-semibold text-white"
+          className="h-[50px] w-[150px] rounded-[15px] border border-btnBorder bg-CTA font-semibold text-white"
           onClick={isCancelled ? handleGoHome : handleCancelSubscription}
         >
           {isCancelled ? "Go Home" : "Yes, go ahead"}

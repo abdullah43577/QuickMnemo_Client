@@ -2,14 +2,22 @@
 
 import Image from "next/image";
 import ellipse from "../../../public/ellipse.png";
-import { useAuthenticatedState } from "@/hooks/useStore";
+import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 
 export default function SavedMnemonics() {
   const { savedMnemonics } = useAuthenticatedState();
+  const { setIsModalOpen, setCurrentModalstep, setToBeDeletedMnemonic } =
+    useModalStore();
+
+  const handleDeleteMnemonic = function (str: string) {
+    setCurrentModalstep("Delete Mnemonics");
+    setIsModalOpen("open");
+    setToBeDeletedMnemonic(str);
+  };
 
   return (
     <section>
-      <div className="mx-auto max-w-[1440px] items-center px-5 pt-[43px] 2xl:px-[162px]">
+      <div className="mx-auto max-w-[1440px] items-center px-5 pt-[18px] lg:pt-[43px] 2xl:px-[162px]">
         <div className="group mb-[53px] flex cursor-pointer items-center gap-[10px]">
           <svg
             width="20"
@@ -35,7 +43,7 @@ export default function SavedMnemonics() {
                 <div
                   key={index}
                   className="generated_mnemo_active relative flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-[500] leading-[20px] lg:w-[440px] lg:text-xl"
-                  // onClick={() => handleMnemoClick(index)}
+                  onClick={() => handleDeleteMnemonic(str)}
                 >
                   <div className="absolute left-0 top-0">
                     <Image src={ellipse} alt="ellipse" />

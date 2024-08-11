@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react";
 
 export function GenerateMnemonics() {
   const { isPremium } = useAuthenticatedState();
-  const { setIsModalOpen, setCurrentModalstep } = useModalStore();
+  const { setIsModalOpen, setCurrentModalstep, setShowToast } = useModalStore();
   const [categories, setCategories] = useState([
     {
       title: "Simple",
@@ -61,7 +61,7 @@ export function GenerateMnemonics() {
         {categories.map((category) => (
           <div
             key={category.title}
-            className={`flex h-[50px] items-center justify-center rounded-[15px] border border-[#EDEAE7] ${category.isLocked ? "cursor-not-allowed items-center bg-[#EDEAE7]" : "hover:bg-CTA cursor-pointer hover:text-white"} flex-1 px-[31.5px] text-black lg:h-[65px] lg:px-[21.5px] ${category.isSelected && "bg-CTA border-btnBorder text-white"}`}
+            className={`flex h-[50px] items-center justify-center rounded-[15px] border border-[#EDEAE7] ${category.isLocked ? "cursor-not-allowed items-center bg-[#EDEAE7]" : "cursor-pointer hover:bg-CTA hover:text-white"} flex-1 px-[31.5px] text-black lg:h-[65px] lg:px-[21.5px] ${category.isSelected && "border-btnBorder bg-CTA text-white"}`}
             onClick={() => handleClick(category.title)}
           >
             {category.isLocked ? (
@@ -180,7 +180,7 @@ export function GenerateMnemonics() {
         </div>
       )}
 
-      <button className="border-btnBorder bg-CTA h-[50px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
+      <button className="h-[50px] w-full rounded-[15px] border border-btnBorder bg-CTA text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
         Start generator
       </button>
     </aside>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useAuthenticatedState } from "./useStore";
+import { useAuthenticatedState, useModalStore } from "./useStore";
 import { useRouter } from "next/navigation";
 import api from "@/app/axiosInstance";
+import { customId, handleErrors } from "@/utils/handleErrors";
 
 export const usePaymentValidation = function (
   flw_status: string | null,
@@ -10,6 +11,7 @@ export const usePaymentValidation = function (
   flw_transact_id: string | null,
 ) {
   const { setIsPremium } = useAuthenticatedState();
+  const { setShowToast } = useModalStore();
   const router = useRouter();
   const [hasValidated, setHasValidated] = useState(false);
 
@@ -30,12 +32,12 @@ export const usePaymentValidation = function (
           });
 
           if (response.status === 200) {
-            toast(response.data.message);
+            setShowToast({ show: true, msg: response.data.message });
             setIsPremium(true);
             router.push("/");
           }
         } catch (error) {
-          console.error((error as any).response?.data?.error);
+          handleErrors(error);
         }
       };
 
@@ -50,5 +52,6 @@ export const usePaymentValidation = function (
     router,
     setIsPremium,
     hasValidated,
+    setShowToast,
   ]);
 };

@@ -1,7 +1,9 @@
 "use client";
 
-import api from "../../app/axiosInstance";
+import { toast } from "react-toastify";
+import api from "../../../app/axiosInstance";
 import { useState } from "react";
+import { customId } from "@/utils/handleErrors";
 
 export default function Payment() {
   const [isFetching, setIsFetching] = useState(false);
@@ -9,9 +11,18 @@ export default function Payment() {
   const handlePayment = async function () {
     try {
       setIsFetching(true);
-      const response = await api.get("/subscribe");
+      const response = api.get("/subscribe");
 
-      const paymentLink = response.data.message;
+      toast.promise(
+        response,
+        {
+          pending: "Payment link processing",
+          success: "Payment link successfully processed",
+        },
+        { toastId: customId },
+      );
+      const { data } = await response;
+      const paymentLink = data.message;
       window.open(paymentLink, "_self");
 
       setIsFetching(false);
@@ -39,13 +50,6 @@ export default function Payment() {
       >
         I want to proceed to payment
       </button>
-
-      {/* <div
-        className="mb-[90px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] text-base font-[500] leading-5 md:text-[25px] lg:h-[85px]"
-        onClick={() => setCurrentModalstep("VerifyToken")}
-      >
-        I want to verify my token
-      </div> */}
     </div>
   );
 }

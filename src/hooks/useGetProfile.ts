@@ -1,7 +1,7 @@
 import api from "@/app/axiosInstance";
 import { useLayoutEffect } from "react";
 import { useAuthenticatedState } from "./useStore";
-import { toast } from "react-toastify";
+import { handleErrors } from "@/utils/handleErrors";
 
 interface UserProfile {
   email: string;
@@ -9,6 +9,9 @@ interface UserProfile {
   subscription: {
     id: string;
     status: "active" | "pending" | "cancelled";
+    subscribedAt: Date;
+    nextPaymentDate: Date;
+    cancelledAt: Date;
   };
   savedMnemonics: string[];
 }
@@ -32,13 +35,9 @@ export const useGetProfile = function () {
           setSavedMnemonics(response.data.savedMnemonics);
         }
       } catch (error) {
-        if ((error as any).response.data.message) {
-          toast((error as any).response.data.message);
-          setIsPremium(false);
-          setIsAuthenticated(false);
-          return;
-        }
-        toast((error as any).response?.data?.error);
+        setIsPremium(false);
+        setIsAuthenticated(false);
+        handleErrors(error);
         return {};
       }
     };

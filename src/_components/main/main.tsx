@@ -19,7 +19,8 @@ export default function WindowMain() {
     isAuthenticated,
     isPremium,
     isSuccessShownAlready,
-    setIsSucecssShownAlready,
+    setIsSuccessShownAlready,
+    hasPaid,
   } = useAuthenticatedState();
 
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
@@ -30,7 +31,7 @@ export default function WindowMain() {
       if (isSuccessShownAlready) {
         return setIsModalOpen("close");
       } else {
-        setIsSucecssShownAlready(true);
+        setIsSuccessShownAlready(true);
         setCurrentModalstep("Success");
         setIsModalOpen("open");
       }
@@ -40,13 +41,19 @@ export default function WindowMain() {
       setCurrentModalstep("Payment");
       setIsModalOpen("open");
     }
+
+    if (isAuthenticated && hasPaid) {
+      setCurrentModalstep("VerifyPayment");
+      setIsModalOpen("open");
+    }
   }, [
     isAuthenticated,
     isPremium,
     setIsModalOpen,
     setCurrentModalstep,
     isSuccessShownAlready,
-    setIsSucecssShownAlready,
+    setIsSuccessShownAlready,
+    hasPaid,
   ]);
 
   useEffect(() => cachedFn(), [isAuthenticated, cachedFn]);
