@@ -10,11 +10,16 @@ interface UserProfile {
     id: string;
     status: "active" | "pending" | "cancelled";
   };
+  savedMnemonics: string[];
 }
 
 export const useGetProfile = function () {
-  const { setIsPremium, isAuthenticated, setIsAuthenticated } =
-    useAuthenticatedState();
+  const {
+    setIsPremium,
+    isAuthenticated,
+    setIsAuthenticated,
+    setSavedMnemonics,
+  } = useAuthenticatedState();
 
   useLayoutEffect(() => {
     if (!isAuthenticated) return;
@@ -22,7 +27,10 @@ export const useGetProfile = function () {
     const getUserProfile = async () => {
       try {
         const response = await api.get<UserProfile>("/user-info");
-        if (response.data.isPremium) setIsPremium(true);
+        if (response.data.isPremium) {
+          setIsPremium(true);
+          setSavedMnemonics(response.data.savedMnemonics);
+        }
       } catch (error) {
         if ((error as any).response.data.message) {
           toast((error as any).response.data.message);
@@ -36,5 +44,5 @@ export const useGetProfile = function () {
     };
 
     getUserProfile();
-  }, [isAuthenticated, setIsPremium, setIsAuthenticated]);
+  }, [isAuthenticated, setIsPremium, setIsAuthenticated, setSavedMnemonics]);
 };

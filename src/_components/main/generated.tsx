@@ -3,6 +3,9 @@
 import Image from "next/image";
 import ellipse from "../../../public/ellipse.png";
 import { useEffect, useState } from "react";
+import api from "@/app/axiosInstance";
+import { toast } from "react-toastify";
+import { useAuthenticatedState } from "@/hooks/useStore";
 
 interface Mnemonics {
   id: number;
@@ -12,33 +15,60 @@ interface Mnemonics {
 
 export function GeneratedMnemonics() {
   const [mnemo, setMnemo] = useState<Mnemonics[]>([]);
+  const { setSavedMnemonics, isAuthenticated } = useAuthenticatedState();
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setMnemo([
         { id: 0, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 1, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 2, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 3, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 4, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 5, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 6, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 7, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 8, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 9, title: "Harry Swiftly Raced Zebras", isClicked: false },
+        { id: 1, title: "John Swiftly Raced Zebras", isClicked: false },
+        { id: 2, title: "Potter Swiftly Raced Zebras", isClicked: false },
+        { id: 3, title: "Johson Swiftly Raced Zebras", isClicked: false },
+        { id: 4, title: "Johanna Swiftly Raced Zebras", isClicked: false },
+        { id: 5, title: "Abdul Swiftly Raced Zebras", isClicked: false },
+        { id: 6, title: "Ayoola Swiftly Raced Zebras", isClicked: false },
+        { id: 7, title: "Roman Swiftly Raced Zebras", isClicked: false },
       ]);
-    }, 3000);
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleMnemoClick = function (index: number) {
     setMnemo((prevValue) =>
       prevValue.map((item) =>
-        item.id === index
-          ? { ...item, isClicked: !item.isClicked }
-          : { ...item, isClicked: false },
+        item.id === index ? { ...item, isClicked: !item.isClicked } : item,
       ),
     );
   };
+
+  const saveMnemoToDB = async function (savedMnemonics: string[]) {
+    try {
+      const response = await api.put("/save-mnemonics", {
+        savedMnemonics,
+      });
+      if (response.status === 200) toast(response.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (mnemo.length) {
+      const clickedMnemo = mnemo
+        .filter((item) => item.isClicked === true)
+        .map((obj) => obj.title);
+
+      const timeout = setTimeout(() => {
+        if (clickedMnemo.length) {
+          setSavedMnemonics(clickedMnemo); // save to localStorage
+          if (isAuthenticated) saveMnemoToDB(clickedMnemo); // conditionally save to DB
+        }
+      }, 2000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [mnemo, setSavedMnemonics, isAuthenticated]);
 
   return (
     <aside className="max-h-[200px] w-full overflow-scroll pr-1 lg:max-h-full lg:w-auto">

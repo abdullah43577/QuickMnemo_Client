@@ -46,9 +46,11 @@ interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
   isSuccessShownAlready: boolean;
+  savedMnemonics: string[];
   setIsAuthenticated: (auth: boolean) => void;
   setIsPremium: (arg: boolean) => void;
   setIsSucecssShownAlready: (arg: boolean) => void;
+  setSavedMnemonics: (arg: string[]) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
@@ -56,6 +58,7 @@ export const useAuthenticatedState = create<Authenticated>()(
       isAuthenticated: false,
       isPremium: false,
       isSuccessShownAlready: false,
+      savedMnemonics: [],
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
@@ -63,7 +66,9 @@ export const useAuthenticatedState = create<Authenticated>()(
       setIsPremium: (arg) => set((_) => ({ isPremium: arg })),
       setIsSucecssShownAlready: (arg) =>
         set((_) => ({ isSuccessShownAlready: arg })),
+      setSavedMnemonics: (arg) => set((_) => ({ savedMnemonics: arg })),
     }),
+
     {
       name: "isAuthenticated",
       storage: createJSONStorage(() => localStorage),

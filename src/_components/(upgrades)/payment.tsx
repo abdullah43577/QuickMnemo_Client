@@ -1,6 +1,5 @@
 "use client";
 
-import { useModalStore } from "@/hooks/useStore";
 import api from "../../app/axiosInstance";
 import { useState } from "react";
 
@@ -11,8 +10,8 @@ export default function Payment() {
     try {
       setIsFetching(true);
       const response = await api.get("/subscribe");
-      const paymentLink = response.data.message;
 
+      const paymentLink = response.data.message;
       window.open(paymentLink, "_self");
 
       setIsFetching(false);

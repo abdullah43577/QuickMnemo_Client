@@ -5,6 +5,8 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let counter: number = 0;
+
 // Add a response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => response, // If the response is successful, just return it
@@ -16,7 +18,13 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshResponse = await api.post("/token");
+        counter++;
+        if (counter >= 4) {
+          throw new Error("Failed to refresh token after 3 attempts");
+        }
+        await api.post("/token");
+
+        counter = 0; // Reset the counter for the next retry attempt
 
         return api(originalRequest); // Retry the original request
       } catch (refreshError) {

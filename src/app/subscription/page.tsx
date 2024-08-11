@@ -1,11 +1,32 @@
 "use client";
 
-import { useGetProfile } from "@/hooks/useGetProfile";
-import { useModalStore } from "@/hooks/useStore";
+import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
+import { toast } from "react-toastify";
+import api from "../axiosInstance";
 
 export default function Subscription() {
-  useGetProfile();
   const { setCurrentModalstep, setIsModalOpen } = useModalStore();
+  const { isPremium } = useAuthenticatedState();
+
+  const handleSubscription = async function () {
+    try {
+      const response = await api.get("/subscribe");
+
+      if (response.data.type === "subscription_activated") {
+        toast(response.data.message);
+      } else {
+        const paymentLink = response.data.message;
+        window.open(paymentLink, "_self");
+      }
+    } catch (error) {
+      console.error((error as any).response?.data?.error);
+    }
+  };
+
+  const handleCancelSubscription = function () {
+    setIsModalOpen("open");
+    setCurrentModalstep("Cancel Sub");
+  };
 
   return (
     <>
@@ -33,21 +54,21 @@ export default function Subscription() {
               </defs>
             </svg>
 
-            <span className="group-hover:bg-gradient-to-r group-hover:from-[#8338EC] group-hover:to-[#CB38E7] group-hover:bg-clip-text group-hover:text-transparent">
+            <span className="text-lg font-bold leading-5 group-hover:bg-gradient-to-r group-hover:from-[#8338EC] group-hover:to-[#CB38E7] group-hover:bg-clip-text group-hover:text-transparent">
               Subscription
             </span>
           </div>
 
-          <button className="border-btnBorder bg-CTA mb-5 block h-[50px] w-full rounded-[15px] font-semibold leading-[-0.8px] text-white md:w-[240px]">
-            Renew subscription
+          <button
+            className="border-btnBorder bg-CTA mb-5 block h-[50px] w-full rounded-[15px] font-semibold leading-[-0.8px] text-white md:w-[240px]"
+            onClick={handleSubscription}
+          >
+            Renew or subscribe
           </button>
 
           <button
-            className="h-[50px] w-full rounded-[15px] border border-[#EDEDED] font-semibold leading-[-0.8px] text-[#EC3838] md:w-[240px]"
-            onClick={() => {
-              setIsModalOpen("open");
-              setCurrentModalstep("Cancel Sub");
-            }}
+            className={`h-[50px] w-full rounded-[15px] border border-[#EDEDED] font-semibold leading-[-0.8px] text-[#EC3838] md:w-[240px] ${!isPremium ? "cursor-not-allowed text-opacity-50" : "cursor-pointer text-opacity-100"}`}
+            onClick={() => (isPremium ? handleCancelSubscription() : null)}
           >
             Cancel subscription
           </button>

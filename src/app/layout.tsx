@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense } from "react";
 import UpgradeLayout from "@/_components/(upgrades)/upgradeLayout";
+import LayoutProvider from "@/_components/Provider";
 
 export const metadata: Metadata = {
   title: "QuickMnemo",
@@ -23,7 +24,9 @@ export default function RootLayout({
       </head>
       <body className="relative pb-[52px]" suppressHydrationWarning={true}>
         <Header />
-        <Suspense fallback={null}>{children}</Suspense>
+        <Suspense fallback={null}>
+          <LayoutProvider>{children}</LayoutProvider>
+        </Suspense>
         {/* Modal Window */}
         <UpgradeLayout />
         <ToastContainer />

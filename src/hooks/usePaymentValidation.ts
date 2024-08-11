@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useAuthenticatedState, useModalStore } from "./useStore";
+import { useAuthenticatedState } from "./useStore";
 import { useRouter } from "next/navigation";
 import api from "@/app/axiosInstance";
 
@@ -10,11 +10,16 @@ export const usePaymentValidation = function (
   flw_transact_id: string | null,
 ) {
   const { setIsPremium } = useAuthenticatedState();
-  const { setCurrentModalstep } = useModalStore();
   const router = useRouter();
+  const [hasValidated, setHasValidated] = useState(false);
 
   useEffect(() => {
-    if (flw_status?.length && flw_tx_ref?.length && flw_transact_id?.length) {
+    if (
+      flw_status?.length &&
+      flw_tx_ref?.length &&
+      flw_transact_id?.length &&
+      !hasValidated
+    ) {
       //* VALIDATE SUBSCRIPTION
       const validatePayment = async function () {
         try {
@@ -27,7 +32,6 @@ export const usePaymentValidation = function (
           if (response.status === 200) {
             toast(response.data.message);
             setIsPremium(true);
-            setCurrentModalstep("Success");
             router.push("/");
           }
         } catch (error) {
@@ -36,6 +40,8 @@ export const usePaymentValidation = function (
       };
 
       validatePayment();
+      // Mark the validation as done to prevent re-execution
+      setHasValidated(true);
     }
   }, [
     flw_status,
@@ -43,6 +49,6 @@ export const usePaymentValidation = function (
     flw_transact_id,
     router,
     setIsPremium,
-    setCurrentModalstep,
+    hasValidated,
   ]);
 };
