@@ -1,10 +1,26 @@
 import { handleErrors } from "@/utils/handleErrors";
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const accessTokenExpiration = new Date();
+accessTokenExpiration.setTime(accessTokenExpiration.getTime() + 30 * 60 * 1000); // expires in 30mins
+export { accessTokenExpiration };
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  withCredentials: true,
 });
+
+// Request interceptor to include the latest access token
+api.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("session_id");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 let counter: number = 0;
 
@@ -20,10 +36,25 @@ api.interceptors.response.use(
 
       try {
         counter++;
-        if (counter >= 4) {
+        if (counter >= 4)
           throw new Error("Failed to refresh token after 3 attempts");
-        }
-        await api.post("/token");
+
+        const refreshToken = Cookies.get("session_id_ref");
+
+        const response = await api.post("/token", { refreshToken });
+        const newAccessToken = response.data.accessToken;
+        const newExpiration = new Date();
+        newExpiration.setTime(newExpiration.getTime() + 30 * 60 * 1000);
+
+        Cookies.set("session_id", newAccessToken, {
+          secure: true,
+          sameSite: "strict",
+          expires: newExpiration,
+        });
+
+        // Update the Authorization header with the new token
+        api.defaults.headers.common["Authorization"] =
+          `Bearer ${newAccessToken}`;
 
         counter = 0; // Reset the counter for the next retry attempt
 

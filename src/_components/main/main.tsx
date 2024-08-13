@@ -27,16 +27,6 @@ export default function WindowMain() {
 
   //* CONDITIONALLY RENDER CURRENT WINDOW STEP
   const cachedFn = useCallback(() => {
-    if (isAuthenticated && isPremium) {
-      if (isSuccessShownAlready) {
-        return setIsModalOpen("close");
-      } else {
-        setIsSuccessShownAlready(true);
-        setCurrentModalstep("Success");
-        setIsModalOpen("open");
-      }
-    }
-
     if (isAuthenticated) {
       setCurrentModalstep("Payment");
       setIsModalOpen("open");
@@ -45,6 +35,16 @@ export default function WindowMain() {
     if (isAuthenticated && hasPaid) {
       setCurrentModalstep("VerifyPayment");
       setIsModalOpen("open");
+    }
+
+    if (isAuthenticated && isPremium) {
+      if (isSuccessShownAlready) {
+        return setIsModalOpen("close");
+      } else {
+        setIsSuccessShownAlready(true);
+        setCurrentModalstep("Success");
+        setIsModalOpen("open");
+      }
     }
   }, [
     isAuthenticated,

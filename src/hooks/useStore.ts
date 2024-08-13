@@ -6,6 +6,7 @@ type ModalSteps =
   | "Signup"
   | "SignupTemplate"
   | "Login"
+  | "VerifyOAuth"
   | "LoginTemplate"
   | "Payment"
   | "VerifyPayment"

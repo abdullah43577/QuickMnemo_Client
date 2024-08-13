@@ -17,14 +17,14 @@ export default function Upgrade() {
 
   return (
     <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-4 lg:text-[48px] lg:leading-[49px] 2xl:mb-[30px]">
         Upgrade to QuickMnemo{" "}
         <span className="excon relative -top-1 h-[32px] rounded-[11px] bg-gradient-to-r from-[#8338EC] to-[#CB38E7] px-[7px] text-xl leading-[36px] -tracking-[5.5%] text-white">
           Plus
         </span>
       </h2>
 
-      <p className="mb-[27.5px] text-base font-[500] leading-5 md:text-[24px] md:leading-[25px] lg:mb-[37px]">
+      <p className="mb-[27.5px] text-base font-[500] leading-5 md:text-[24px] md:leading-[25px] lg:mb-4 2xl:mb-[37px]">
         Quickmnemo plus gives you access to exciting features to help you
         memorize better
       </p>
@@ -87,7 +87,7 @@ export default function Upgrade() {
       </div>
 
       <button
-        className="border-btnBorder bg-CTA mb-[43px] h-[50px] w-full rounded-[15px] border text-base font-medium text-white lg:mb-[70px] lg:h-[85px] lg:text-xl"
+        className="mb-[43px] h-[50px] w-full rounded-[15px] border border-btnBorder bg-CTA text-base font-medium text-white md:h-[70px] lg:mb-[32px] lg:text-xl 2xl:mb-[70px] 2xl:h-[85px]"
         onClick={() => setCurrentModalstep("Signup")}
       >
         Upgrade for just ₦500 per month

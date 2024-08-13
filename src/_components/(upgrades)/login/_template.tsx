@@ -4,9 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import api from "@/app/axiosInstance";
+import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 import { handleErrors } from "@/utils/handleErrors";
+import Cookies from "js-cookie";
 
 const passwordValidationRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
@@ -41,9 +42,20 @@ export default function LoginTemplate() {
   const loginUser = async function ({ email, password }: FormValues) {
     try {
       setIsLoggingIn(true);
-      const response = await api.post("/register", { email, password });
+      const response = await api.post("/login", { email, password });
       if (response.status === 200) {
-        setShowToast({ show: true, msg: "Login successful" });
+        Cookies.set("session_id", response.data.token.accessToken, {
+          secure: true,
+          sameSite: "strict",
+          expires: accessTokenExpiration,
+        });
+
+        Cookies.set("session_id_ref", response.data.token.refreshToken, {
+          secure: true,
+          sameSite: "strict",
+          expires: 7,
+        });
+        setShowToast({ show: true, msg: response.data.message });
         setIsAuthenticated(true);
         setIsLoggingIn(false);
       }

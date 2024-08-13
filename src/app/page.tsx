@@ -16,7 +16,7 @@ export default function Home() {
           Your
           <span className="excon bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-transparent">
             {" "}
-            Memory's{" "}
+            Memories{" "}
           </span>
           New Best Friend
         </h1>

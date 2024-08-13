@@ -24,7 +24,7 @@ export const Toast = function () {
         opacity: toast.show ? 1 : 0,
         visibility: toast.show ? "visible" : "hidden",
       }}
-      className="absolute left-0 top-0 z-10 flex h-full w-full items-start justify-center bg-overlay"
+      className="absolute left-0 top-0 z-[1000] flex h-full w-full items-start justify-center bg-overlay"
     >
       <motion.div
         initial={{ opacity: 0, visibility: "hidden", y: "-100%" }}
@@ -35,7 +35,7 @@ export const Toast = function () {
         }}
         transition={{ duration: 0.5 }}
         //fixed left-1/2 top-[120px] -translate-x-1/2
-        className="relative top-[120px] z-50 flex max-h-full items-center gap-[10px] rounded-[33px] border bg-white px-[12.5px] py-[9.5px] shadow-md"
+        className="relative top-[120px] z-[2000] flex max-h-full items-center gap-[10px] rounded-[33px] border bg-white px-[12.5px] py-[9.5px] shadow-md"
       >
         <svg
           width="26"

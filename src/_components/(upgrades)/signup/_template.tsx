@@ -34,7 +34,7 @@ export default function SignUpTemplate() {
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { setIsAuthenticated } = useAuthenticatedState();
-  const { setShowToast } = useModalStore();
+  const { setShowToast, setCurrentModalstep } = useModalStore();
   const [isRegistering, setIsRegistering] = useState(false);
 
   const registerUser = async function ({ email, password }: FormValues) {
@@ -46,7 +46,7 @@ export default function SignUpTemplate() {
           show: true,
           msg: "Registration successful, you are logged in",
         });
-        setIsAuthenticated(true);
+        setCurrentModalstep("LoginTemplate");
         setIsRegistering(false);
       }
     } catch (error) {
