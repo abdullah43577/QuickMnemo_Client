@@ -21,7 +21,7 @@ export default function Home() {
           New Best Friend
         </h1>
 
-        <p className="mx-auto mb-[67px] max-w-[600px] text-center leading-5 lg:text-[24px]">
+        <p className="mx-auto mb-[67px] max-w-[600px] text-center leading-[24px] lg:text-[24px]">
           Unlock the power of mnemonics and turn forgettable information into
           unforgettable memories.
         </p>

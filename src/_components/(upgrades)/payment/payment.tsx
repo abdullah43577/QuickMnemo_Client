@@ -33,8 +33,8 @@ export default function Payment() {
   };
 
   return (
-    <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+    <>
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Payment,
       </h2>
 
@@ -45,11 +45,11 @@ export default function Payment() {
 
       <button
         disabled={isFetching}
-        className={`mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[85px] lg:text-xl ${isFetching ? "bg-gray-400" : "border-btnBorder bg-CTA"}`}
+        className={`mb-5 h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:h-[85px] lg:text-xl ${isFetching ? "bg-gray-400" : "border-btnBorder bg-CTA"}`}
         onClick={handlePayment}
       >
         I want to proceed to payment
       </button>
-    </div>
+    </>
   );
 }

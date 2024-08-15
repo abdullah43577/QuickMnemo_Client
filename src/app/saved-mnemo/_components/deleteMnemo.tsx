@@ -6,7 +6,8 @@ import { handleErrors } from "@/utils/handleErrors";
 
 export const DeleteMnemo = function () {
   const { toBeDeletedMnemonic, setShowToast, setIsModalOpen } = useModalStore();
-  const { savedMnemonics, setSavedMnemonics } = useAuthenticatedState();
+  const { savedMnemonics, setSavedMnemonics, isAuthenticated } =
+    useAuthenticatedState();
 
   const handleDeleteMnemonic = async function () {
     if (!toBeDeletedMnemonic.length) return;
@@ -21,12 +22,14 @@ export const DeleteMnemo = function () {
       setSavedMnemonics(filteredMnemonics);
       setIsModalOpen("close");
 
-      // send a PUT request to the server to delete the mnemonic from the database
-      const response = await api.put("/delete-mnemonics", {
-        txt: toBeDeletedMnemonic,
-      });
+      if (isAuthenticated) {
+        // send a PUT request to the server to delete the mnemonic from the database
+        const response = await api.put("/delete-mnemonics", {
+          txt: toBeDeletedMnemonic,
+        });
 
-      setShowToast({ show: true, msg: response.data.message });
+        setShowToast({ show: true, msg: response.data.message });
+      }
     } catch (error) {
       handleErrors(error);
       setSavedMnemonics(initialState);
@@ -35,30 +38,30 @@ export const DeleteMnemo = function () {
   };
 
   return (
-    <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+    <>
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Remove Item
       </h2>
 
-      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[40px] lg:leading-[25px]">
+      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[74px] lg:leading-[25px]">
         Are you sure you want to delete this item?
       </p>
 
-      <div className="flex items-center justify-between">
+      <div className="flex gap-[28px]">
         <button
-          className="h-[50px] w-[150px] rounded-[15px] border border-btnBorder bg-CTA font-semibold text-white"
+          className="h-[50px] w-full rounded-[15px] border border-btnBorder bg-CTA font-semibold text-white lg:h-[85px] lg:text-2xl lg:font-medium"
           onClick={handleDeleteMnemonic}
         >
           Remove item
         </button>
 
         <button
-          className="h-[50px] w-[150px] rounded-[15px] border border-[#EDEDED] font-semibold text-black"
+          className="h-[50px] w-full rounded-[15px] border border-[#EDEDED] font-semibold text-black lg:h-[85px] lg:text-2xl lg:font-medium"
           onClick={() => setIsModalOpen("close")}
         >
           Cancel
         </button>
       </div>
-    </div>
+    </>
   );
 };

@@ -8,6 +8,7 @@ import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 import { handleErrors } from "@/utils/handleErrors";
 import Cookies from "js-cookie";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const passwordValidationRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
@@ -66,10 +67,7 @@ export default function LoginTemplate() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(loginUser)}
-      className="p-5 lg:pl-[57px] lg:pr-[58px]"
-    >
+    <form onSubmit={handleSubmit(loginUser)}>
       <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Login,
       </h2>
@@ -80,13 +78,13 @@ export default function LoginTemplate() {
 
       <div>
         <div>
-          <label htmlFor="Email" className="lg:text-xl">
+          <label htmlFor="Email" className="font-medium text-black lg:text-xl">
             Email
           </label>
           <div>
             <input
               type="email"
-              className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
+              className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center font-medium text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
               {...register("email", { required: true })}
             />
             {errors.email && (
@@ -98,14 +96,17 @@ export default function LoginTemplate() {
         </div>
 
         <div className="mt-[19px]">
-          <label htmlFor="Password" className="lg:text-xl">
+          <label
+            htmlFor="Password"
+            className="font-medium text-black lg:text-xl"
+          >
             Password
           </label>
           <div className="relative">
             <div>
               <input
                 type={isPasswordVisible ? "text" : "password"}
-                className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
+                className="mt-[15px] h-[60px] w-full rounded-[15px] border border-[#EDEAE7] px-5 text-center font-medium text-black outline-none focus:border-inputBorder focus:shadow-inputDrop lg:min-w-full"
                 {...register("password", { required: true })}
               />
               {errors.password && (
@@ -152,12 +153,18 @@ export default function LoginTemplate() {
 
       <button
         disabled={isLoggingIn}
-        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl ${isLoggingIn ? "border-gray-400" : "border-btnBorder bg-CTA"}`}
+        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl ${isLoggingIn ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
       >
-        Login
+        <ClipLoader
+          color="#fff"
+          size={20}
+          loading={isLoggingIn}
+          aria-label="Loading Spinner"
+        />
+        <span className="text-white">Login</span>
       </button>
 
-      <p className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pb-5 text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]">
+      <p className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]">
         Have any issues? Report here
       </p>
     </form>

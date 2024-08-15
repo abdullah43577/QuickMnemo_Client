@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useAuthenticatedState, useModalStore } from "./useStore";
 import { useRouter } from "next/navigation";
 import api from "@/app/axiosInstance";
-import { customId, handleErrors } from "@/utils/handleErrors";
+import { handleErrors } from "@/utils/handleErrors";
 
 export const usePaymentValidation = function (
   flw_status: string | null,
@@ -25,8 +25,6 @@ export const usePaymentValidation = function (
       //* VALIDATE SUBSCRIPTION
       const validatePayment = async function () {
         try {
-          setCurrentModalstep("VerifyPayment");
-          setIsModalOpen("open");
           const response = await api.post("/subscribe/callback", {
             status: flw_status,
             tx_ref: flw_tx_ref,

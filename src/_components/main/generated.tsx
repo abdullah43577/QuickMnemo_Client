@@ -15,25 +15,17 @@ interface Mnemonics {
 }
 
 export function GeneratedMnemonics() {
-  const [mnemo, setMnemo] = useState<Mnemonics[]>([]);
+  const [mnemo, setMnemo] = useState<Mnemonics[]>([
+    { id: 0, title: "Harry Swiftly Raced Zebras", isClicked: false },
+    { id: 1, title: "John Swiftly Raced Zebras", isClicked: false },
+    { id: 2, title: "Potter Swiftly Raced Zebras", isClicked: false },
+    { id: 3, title: "Johson Swiftly Raced Zebras", isClicked: false },
+    { id: 4, title: "Johanna Swiftly Raced Zebras", isClicked: false },
+    { id: 5, title: "Abdul Swiftly Raced Zebras", isClicked: false },
+    { id: 6, title: "Ayoola Swiftly Raced Zebras", isClicked: false },
+    { id: 7, title: "Roman Swiftly Raced Zebras", isClicked: false },
+  ]);
   const { setSavedMnemonics, isAuthenticated } = useAuthenticatedState();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMnemo([
-        { id: 0, title: "Harry Swiftly Raced Zebras", isClicked: false },
-        { id: 1, title: "John Swiftly Raced Zebras", isClicked: false },
-        { id: 2, title: "Potter Swiftly Raced Zebras", isClicked: false },
-        { id: 3, title: "Johson Swiftly Raced Zebras", isClicked: false },
-        { id: 4, title: "Johanna Swiftly Raced Zebras", isClicked: false },
-        { id: 5, title: "Abdul Swiftly Raced Zebras", isClicked: false },
-        { id: 6, title: "Ayoola Swiftly Raced Zebras", isClicked: false },
-        { id: 7, title: "Roman Swiftly Raced Zebras", isClicked: false },
-      ]);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleMnemoClick = function (index: number) {
     setMnemo((prevValue) =>

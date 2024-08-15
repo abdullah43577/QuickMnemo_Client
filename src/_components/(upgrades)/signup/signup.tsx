@@ -7,7 +7,7 @@ export default function SignUp() {
   const { setCurrentModalstep } = useModalStore();
 
   return (
-    <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
+    <>
       <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Hello there,
       </h2>
@@ -87,11 +87,11 @@ export default function SignUp() {
       </div>
 
       <p
-        className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pb-[66px] text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]"
+        className="cursor-pointer bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text text-center text-sm font-[500] text-transparent underline decoration-[#8338EC] underline-offset-[6px] md:text-[24px]"
         onClick={() => setCurrentModalstep("Login")}
       >
         Have an account? Login here
       </p>
-    </div>
+    </>
   );
 }

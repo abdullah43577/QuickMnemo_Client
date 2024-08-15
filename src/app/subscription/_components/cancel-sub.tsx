@@ -59,8 +59,8 @@ export default function CancelSubscription() {
   };
 
   return (
-    <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+    <>
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         Cancel Sub
       </h2>
       <p className="mb-[27.5px] text-base font-[500] leading-5 md:text-[24px] md:leading-[25px] lg:mb-[37px]">
@@ -69,16 +69,16 @@ export default function CancelSubscription() {
           : "Are you sure you want to cancel your subscription?"}
       </p>
 
-      <div className="flex items-center justify-between">
+      <div className="flex gap-[28px]">
         <button
-          className="h-[50px] w-[150px] rounded-[15px] border border-btnBorder bg-CTA font-semibold text-white"
+          className="h-[50px] w-full rounded-[15px] border border-btnBorder bg-CTA font-semibold text-white lg:h-[85px] lg:text-2xl lg:font-medium"
           onClick={isCancelled ? handleGoHome : handleCancelSubscription}
         >
           {isCancelled ? "Go Home" : "Yes, go ahead"}
         </button>
 
         <button
-          className="h-[50px] w-[150px] rounded-[15px] border border-[#EDEDED] font-semibold text-black"
+          className="h-[50px] w-full rounded-[15px] border border-[#EDEDED] font-semibold text-black lg:h-[85px] lg:text-2xl lg:font-medium"
           onClick={() =>
             isCancelled ? handleSubscription() : setIsModalOpen("close")
           }
@@ -86,6 +86,6 @@ export default function CancelSubscription() {
           {isCancelled ? "Sub Again" : " Not yet abeg"}
         </button>
       </div>
-    </div>
+    </>
   );
 }

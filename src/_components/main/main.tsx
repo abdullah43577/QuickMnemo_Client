@@ -20,21 +20,41 @@ export default function WindowMain() {
     isPremium,
     isSuccessShownAlready,
     setIsSuccessShownAlready,
-    hasPaid,
   } = useAuthenticatedState();
 
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
 
   //* CONDITIONALLY RENDER CURRENT WINDOW STEP
   const cachedFn = useCallback(() => {
-    if (isAuthenticated) {
-      setCurrentModalstep("Payment");
+    // * IF GOOGLE VERIFICATION TOKEN IN URL
+    if (token?.length) {
+      setCurrentModalstep("VerifyOAuth");
       setIsModalOpen("open");
+      return;
     }
 
-    if (isAuthenticated && hasPaid) {
+    // * IF USER HAS SUCCESSFULLY LOGGED IN
+    if (
+      isAuthenticated &&
+      !flw_status?.length &&
+      !flw_tx_ref?.length &&
+      !flw_transact_id?.length
+    ) {
+      setCurrentModalstep("Payment");
+      setIsModalOpen("open");
+      return;
+    }
+
+    // * VERIFY PAYMENT MADE ON REDIRECT
+    if (
+      isAuthenticated &&
+      flw_status?.length &&
+      flw_tx_ref?.length &&
+      flw_transact_id?.length
+    ) {
       setCurrentModalstep("VerifyPayment");
       setIsModalOpen("open");
+      return;
     }
 
     if (isAuthenticated && isPremium) {
@@ -53,7 +73,10 @@ export default function WindowMain() {
     setCurrentModalstep,
     isSuccessShownAlready,
     setIsSuccessShownAlready,
-    hasPaid,
+    token?.length,
+    flw_status?.length,
+    flw_tx_ref?.length,
+    flw_transact_id?.length,
   ]);
 
   useEffect(() => cachedFn(), [isAuthenticated, cachedFn]);

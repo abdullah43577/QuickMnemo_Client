@@ -5,7 +5,7 @@ import { useModalStore } from "@/hooks/useStore";
 export default function Success() {
   const { setIsModalOpen } = useModalStore();
   return (
-    <div className="p-5 lg:pl-[57px] lg:pr-[58px]">
+    <div className="p-5 lg:pb-[58px] lg:pl-[57px] lg:pr-[58px] lg:pt-0">
       <svg
         width="60"
         height="60"
@@ -33,7 +33,7 @@ export default function Success() {
         </defs>
       </svg>
 
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
         You're all set!,
       </h2>
 
@@ -43,7 +43,7 @@ export default function Success() {
       </p>
 
       <button
-        className="border-btnBorder bg-CTA mb-[25px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white lg:text-xl"
+        className="h-[60px] w-full rounded-[15px] border border-btnBorder bg-CTA text-base font-medium text-white lg:h-[85px] lg:text-xl"
         onClick={() => setIsModalOpen("close")}
       >
         Start memorizing now

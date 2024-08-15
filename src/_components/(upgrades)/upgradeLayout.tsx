@@ -1,6 +1,6 @@
 "use client";
 
-import { useModalStore } from "@/hooks/useStore";
+import { ModalSteps, useModalStore } from "@/hooks/useStore";
 import Upgrade from "./upgrade";
 import SignUp from "./signup/signup";
 import Login from "./login/login";
@@ -16,15 +16,26 @@ import VerifyOAuthLogin from "./login/verifyOAuthLogin";
 export default function UpgradeLayout() {
   const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
 
+  const modalSteps: ModalSteps[] = [
+    "Upgrade",
+    "VerifyOAuth",
+    "Payment",
+    "VerifyPayment",
+    "Success",
+    "Cancel Sub",
+    "Cancel Sub Success",
+    "Delete Mnemonics",
+  ];
+
   return (
     <>
       <div
         className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[644px] -translate-x-1/2 -translate-y-1/2 rounded-[25px] bg-white lg:w-auto lg:rounded-[20px] ${isModalOpen ? "block" : "hidden"}`}
       >
         <div
-          className={`mt-5 flex items-center ${currentModalStep !== "Upgrade" ? "justify-between" : "justify-end"}`}
+          className={`mt-5 flex items-center lg:pl-6 ${!modalSteps.includes(currentModalStep) ? "justify-between" : "justify-end"}`}
         >
-          {currentModalStep !== "Upgrade" && (
+          {!modalSteps.includes(currentModalStep) && (
             <div
               className="ml-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:ml-[21px] lg:mt-[21px] lg:size-[50px]"
               // onClick={() => setIsModalOpen("close")}
@@ -45,7 +56,7 @@ export default function UpgradeLayout() {
           )}
 
           <div
-            className="mr-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:mr-[21px] lg:mt-[21px] lg:size-[50px]"
+            className="mr-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:mr-[21px] lg:size-[50px]"
             onClick={() => setIsModalOpen("close")}
           >
             <svg
@@ -62,17 +73,19 @@ export default function UpgradeLayout() {
           </div>
         </div>
 
-        {currentModalStep === "Upgrade" && <Upgrade />}
-        {currentModalStep === "Signup" && <SignUp />}
-        {currentModalStep === "SignupTemplate" && <SignUpTemplate />}
-        {currentModalStep === "Login" && <Login />}
-        {currentModalStep === "VerifyOAuth" && <VerifyOAuthLogin />}
-        {currentModalStep === "LoginTemplate" && <LoginTemplate />}
-        {currentModalStep === "Payment" && <Payment />}
-        {currentModalStep === "VerifyPayment" && <VerifyPayment />}
-        {currentModalStep === "Success" && <Success />}
-        {currentModalStep === "Cancel Sub" && <CancelSubscription />}
-        {currentModalStep === "Delete Mnemonics" && <DeleteMnemo />}
+        <div className="p-5 lg:pb-[58px] lg:pl-[57px] lg:pr-[58px] lg:pt-0">
+          {currentModalStep === "Upgrade" && <Upgrade />}
+          {currentModalStep === "Signup" && <SignUp />}
+          {currentModalStep === "SignupTemplate" && <SignUpTemplate />}
+          {currentModalStep === "Login" && <Login />}
+          {currentModalStep === "VerifyOAuth" && <VerifyOAuthLogin />}
+          {currentModalStep === "LoginTemplate" && <LoginTemplate />}
+          {currentModalStep === "Payment" && <Payment />}
+          {currentModalStep === "VerifyPayment" && <VerifyPayment />}
+          {currentModalStep === "Success" && <Success />}
+          {currentModalStep === "Cancel Sub" && <CancelSubscription />}
+          {currentModalStep === "Delete Mnemonics" && <DeleteMnemo />}
+        </div>
       </div>
 
       <div

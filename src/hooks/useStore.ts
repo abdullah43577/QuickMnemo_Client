@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-type ModalSteps =
+export type ModalSteps =
   | "Upgrade"
   | "Signup"
   | "SignupTemplate"
@@ -60,13 +60,11 @@ interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
   isSuccessShownAlready: boolean;
-  hasPaid: boolean;
   savedMnemonics: string[];
   setIsAuthenticated: (auth: boolean) => void;
   setIsPremium: (arg: boolean) => void;
   setIsSuccessShownAlready: (arg: boolean) => void;
   setSavedMnemonics: (arg: string[]) => void;
-  setHasPaid: (arg: boolean) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
   persist(
@@ -75,7 +73,6 @@ export const useAuthenticatedState = create<Authenticated>()(
       isPremium: false,
       isSuccessShownAlready: false,
       savedMnemonics: [],
-      hasPaid: false,
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
@@ -84,11 +81,10 @@ export const useAuthenticatedState = create<Authenticated>()(
       setIsSuccessShownAlready: (arg) =>
         set((_) => ({ isSuccessShownAlready: arg })),
       setSavedMnemonics: (arg) => set((_) => ({ savedMnemonics: arg })),
-      setHasPaid: (arg) => set((_) => ({ hasPaid: arg })),
     }),
 
     {
-      name: "isAuthenticated",
+      name: "storage",
       storage: createJSONStorage(() => localStorage),
     },
   ),
