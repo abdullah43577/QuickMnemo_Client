@@ -18,7 +18,7 @@ export default function SavedMnemonics() {
   return (
     <section>
       <div className="mx-auto max-w-[1440px] items-center px-5 pt-[18px] lg:pt-[43px] 2xl:px-[162px]">
-        <div className="mx-auto max-w-[568px]">
+        <div className="mx-auto h-[75vh] max-w-[568px] md:h-auto">
           <div className="group mb-[53px] flex cursor-pointer items-center gap-[10px]">
             <svg
               width="20"
@@ -38,7 +38,7 @@ export default function SavedMnemonics() {
             </span>
           </div>
 
-          <div className="max-h-[653px] w-full overflow-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:p-[64px]">
+          <div className="max-h-[653px] min-h-full overflow-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:p-[64px]">
             {savedMnemonics.length
               ? savedMnemonics.map((str, index) => (
                   <div

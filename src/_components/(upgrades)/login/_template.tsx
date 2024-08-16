@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 import Cookies from "js-cookie";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -56,13 +56,13 @@ export default function LoginTemplate() {
           sameSite: "strict",
           expires: 7,
         });
-        setShowToast({ show: true, msg: response.data.message });
+        setShowToast({ show: true, msg: response.data.message, type: "msg" });
         setIsAuthenticated(true);
         setIsLoggingIn(false);
       }
     } catch (error) {
       setIsLoggingIn(false);
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

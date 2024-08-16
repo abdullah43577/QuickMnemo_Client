@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import api from "@/app/axiosInstance";
 import { toast } from "react-toastify";
 import { useAuthenticatedState } from "@/hooks/useStore";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 
 interface Mnemonics {
   id: number;
@@ -42,7 +42,7 @@ export function GeneratedMnemonics() {
       });
       if (response.status === 200) toast.success(response.data.message);
     } catch (error) {
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

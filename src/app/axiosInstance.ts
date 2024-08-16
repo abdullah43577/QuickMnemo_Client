@@ -1,4 +1,4 @@
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -60,12 +60,12 @@ api.interceptors.response.use(
 
         return api(originalRequest); // Retry the original request
       } catch (refreshError) {
-        handleErrors(refreshError);
+        HandleErrors(refreshError);
         return Promise.reject(refreshError);
       }
     }
 
-    handleErrors(error);
+    HandleErrors(error);
     return Promise.reject(error);
   },
 );

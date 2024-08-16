@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/app/axiosInstance";
 import { useModalStore } from "@/hooks/useStore";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const passwordValidationRegex =
@@ -45,13 +45,14 @@ export default function SignUpTemplate() {
         setShowToast({
           show: true,
           msg: response.data.message,
+          type: "msg",
         });
         setCurrentModalstep("LoginTemplate");
         setIsRegistering(false);
       }
     } catch (error) {
       setIsRegistering(false);
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

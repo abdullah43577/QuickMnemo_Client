@@ -2,7 +2,7 @@
 
 import api from "@/app/axiosInstance";
 import { useModalStore } from "@/hooks/useStore";
-import { customId, handleErrors } from "@/utils/handleErrors";
+import { customId, HandleErrors } from "@/utils/handleErrors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -36,7 +36,7 @@ export default function CancelSubscription() {
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 
@@ -49,7 +49,7 @@ export default function CancelSubscription() {
       });
     } catch (error) {
       setIsCancelled(false);
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

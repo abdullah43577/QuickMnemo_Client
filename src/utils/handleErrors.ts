@@ -1,17 +1,37 @@
+import { useModalStore } from "@/hooks/useStore";
 import { AxiosError } from "axios";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export const customId = "toastID";
-export const handleErrors = function (error: any) {
+export const HandleErrors = function (error: any) {
+  const { setShowToast } = useModalStore();
+
   if (error instanceof AxiosError) {
     if (error.response) {
-      toast.error(error.response.data.message, {
-        toastId: customId,
+      setShowToast({
+        show: true,
+        msg: error.response.data.message,
+        type: "error",
       });
     }
   } else {
-    toast.error(error.message, {
-      toastId: customId,
+    setShowToast({
+      show: true,
+      msg: error.message,
+      type: "error",
     });
   }
 };
+// export const handleErrors = function (error: any) {
+//   if (error instanceof AxiosError) {
+//     if (error.response) {
+//       toast.error(error.response.data.message, {
+//         toastId: customId,
+//       });
+//     }
+//   } else {
+//     toast.error(error.message, {
+//       toastId: customId,
+//     });
+//   }
+// };

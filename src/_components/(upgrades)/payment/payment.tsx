@@ -3,7 +3,7 @@
 import { toast } from "react-toastify";
 import api from "../../../app/axiosInstance";
 import { useState } from "react";
-import { customId, handleErrors } from "@/utils/handleErrors";
+import { customId, HandleErrors } from "@/utils/handleErrors";
 
 export default function Payment() {
   const [isFetching, setIsFetching] = useState(false);
@@ -28,7 +28,7 @@ export default function Payment() {
       setIsFetching(false);
     } catch (error) {
       setIsFetching(false);
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

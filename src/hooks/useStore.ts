@@ -23,8 +23,13 @@ interface ModalState {
   toast: {
     show: boolean;
     msg: string;
+    type: "error" | "msg" | "";
   };
-  setShowToast: (arg: { show: boolean; msg: string }) => void;
+  setShowToast: (arg: {
+    show: boolean;
+    msg: string;
+    type: "error" | "msg" | "";
+  }) => void;
   toBeDeletedMnemonic: string;
   setToBeDeletedMnemonic: (arg: string) => void;
 }
@@ -38,7 +43,7 @@ export const useModalStore = create<ModalState>()((set) => ({
   currentModalStep: "Upgrade",
   setCurrentModalstep: (arg) =>
     set((state) => ({ currentModalStep: (state.currentModalStep = arg) })),
-  toast: { show: false, msg: "" },
+  toast: { show: false, msg: "", type: "" },
   toBeDeletedMnemonic: "",
   setShowToast: (arg) => set((_) => ({ toast: arg })),
   setToBeDeletedMnemonic: (arg) => set((_) => ({ toBeDeletedMnemonic: arg })),

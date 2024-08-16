@@ -2,7 +2,7 @@
 
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 import api from "../axiosInstance";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 
 export default function Subscription() {
   const { setCurrentModalstep, setIsModalOpen, setShowToast } = useModalStore();
@@ -13,13 +13,13 @@ export default function Subscription() {
       const response = await api.get("/subscribe");
 
       if (response.data.type === "subscription_activated") {
-        setShowToast({ show: true, msg: response.data.message });
+        setShowToast({ show: true, msg: response.data.message, type: "msg" });
       } else {
         const paymentLink = response.data.message;
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      handleErrors(error);
+      HandleErrors(error);
     }
   };
 

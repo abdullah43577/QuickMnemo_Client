@@ -2,7 +2,7 @@ import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "./useStore";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 import Cookies from "js-cookie";
 
 export const useOAuthValidation = function (token: string | null) {
@@ -35,14 +35,18 @@ export const useOAuthValidation = function (token: string | null) {
               expires: 7,
             });
 
-            setShowToast({ show: true, msg: "user logged in successfully" });
+            setShowToast({
+              show: true,
+              msg: "user logged in successfully",
+              type: "msg",
+            });
             setIsAuthenticated(true);
 
             const timeout = setTimeout(() => router.push("/"), 2000);
             return () => clearTimeout(timeout);
           }
         } catch (error) {
-          handleErrors(error);
+          HandleErrors(error);
         } finally {
           // Mark the validation as done to prevent re-execution
           setHasValidated(true);

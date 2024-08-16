@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useAuthenticatedState, useModalStore } from "./useStore";
 import { useRouter } from "next/navigation";
 import api from "@/app/axiosInstance";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 
 export const usePaymentValidation = function (
   flw_status: string | null,
@@ -32,14 +32,18 @@ export const usePaymentValidation = function (
           });
 
           if (response.status === 200) {
-            setShowToast({ show: true, msg: response.data.message });
+            setShowToast({
+              show: true,
+              msg: response.data.message,
+              type: "msg",
+            });
             setIsPremium(true);
 
             const timeout = setTimeout(() => router.push("/"), 2000);
             return () => clearTimeout(timeout);
           }
         } catch (error) {
-          handleErrors(error);
+          HandleErrors(error);
         } finally {
           // Mark the validation as done to prevent re-execution
           setHasValidated(true);

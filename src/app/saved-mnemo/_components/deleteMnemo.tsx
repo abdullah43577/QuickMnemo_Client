@@ -2,7 +2,7 @@
 
 import api from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { handleErrors } from "@/utils/handleErrors";
+import { HandleErrors } from "@/utils/handleErrors";
 
 export const DeleteMnemo = function () {
   const { toBeDeletedMnemonic, setShowToast, setIsModalOpen } = useModalStore();
@@ -28,10 +28,10 @@ export const DeleteMnemo = function () {
           txt: toBeDeletedMnemonic,
         });
 
-        setShowToast({ show: true, msg: response.data.message });
+        setShowToast({ show: true, msg: response.data.message, type: "msg" });
       }
     } catch (error) {
-      handleErrors(error);
+      HandleErrors(error);
       setSavedMnemonics(initialState);
       setIsModalOpen("open");
     }
