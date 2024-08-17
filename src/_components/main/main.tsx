@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useModalStore, useAuthenticatedState } from "@/hooks/useStore";
 import { useSearchParams } from "next/navigation";
 import { GenerateMnemonics } from "./generator";
@@ -25,7 +25,7 @@ export default function WindowMain() {
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
 
   //* CONDITIONALLY RENDER CURRENT WINDOW STEP
-  const cachedFn = useCallback(() => {
+  useEffect(() => {
     // * IF GOOGLE VERIFICATION TOKEN IN URL
     if (token?.length) {
       setCurrentModalstep("VerifyOAuth");
@@ -78,8 +78,6 @@ export default function WindowMain() {
     flw_tx_ref?.length,
     flw_transact_id?.length,
   ]);
-
-  useEffect(() => cachedFn(), [isAuthenticated, cachedFn]);
 
   useOAuthValidation(token);
   usePaymentValidation(flw_status, flw_tx_ref, flw_transact_id);
