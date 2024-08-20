@@ -1,34 +1,24 @@
 "use client";
 
-import { toast } from "react-toastify";
 import api from "../../../app/axiosInstance";
 import { useState } from "react";
-import { customId, HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 
 export default function Payment() {
   const [isFetching, setIsFetching] = useState(false);
+  const handleErrors = useHandleErrors();
 
   const handlePayment = async function () {
     try {
       setIsFetching(true);
-      const response = api.get("/subscribe");
-
-      toast.promise(
-        response,
-        {
-          pending: "Payment link processing",
-          success: "Payment link successfully processed",
-        },
-        { toastId: customId },
-      );
-      const { data } = await response;
+      const { data } = await api.get("/subscribe");
       const paymentLink = data.message;
       window.open(paymentLink, "_self");
 
       setIsFetching(false);
     } catch (error) {
       setIsFetching(false);
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 

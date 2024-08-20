@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { useLayoutEffect, useState } from "react";
+import { FormEvent, useLayoutEffect, useState } from "react";
 
 export function GenerateMnemonics() {
   const { isPremium } = useAuthenticatedState();
@@ -15,6 +15,7 @@ export function GenerateMnemonics() {
     { title: "Educative", isLocked: true, isSelected: false },
     { title: "Funny", isLocked: true, isSelected: false },
   ]);
+  const [inputValue, setInputValue] = useState("");
 
   const handleClick = function (key: string) {
     setCategories((prevValue) =>
@@ -41,6 +42,21 @@ export function GenerateMnemonics() {
     }
   }, [isPremium]);
 
+  const handleInputChange = function (e: FormEvent<HTMLInputElement>) {
+    const { value } = e.currentTarget;
+    const CHAR_LIMIT = isPremium ? 20 : 6;
+    const ERROR_MSG = isPremium
+      ? "You've hit the character limit"
+      : "Upgrade to unlock more characters";
+    if (value.length > CHAR_LIMIT)
+      return setShowToast({
+        show: true,
+        msg: ERROR_MSG,
+        type: "error",
+      });
+    setInputValue(value);
+  };
+
   return (
     <aside className="max-w-full flex-1">
       <h5 className="mb-6 text-center lg:mb-5 lg:text-xl">
@@ -51,6 +67,8 @@ export function GenerateMnemonics() {
         type="text"
         className="mb-6 h-[50px] w-full rounded-[15px] border px-5 text-center uppercase text-black outline-none focus:border-[#8338EC] focus:shadow-inputDrop lg:mb-[63.78px] lg:h-[70px] lg:min-w-full"
         placeholder="HSRZ"
+        value={inputValue}
+        onChange={(e) => handleInputChange(e)}
       />
 
       <h5 className="mb-6 text-center text-base lg:mb-5 lg:text-xl">

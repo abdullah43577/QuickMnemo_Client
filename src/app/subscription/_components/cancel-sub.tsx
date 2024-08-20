@@ -2,54 +2,39 @@
 
 import api from "@/app/axiosInstance";
 import { useModalStore } from "@/hooks/useStore";
-import { customId, HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
 export default function CancelSubscription() {
   const router = useRouter();
-  const { setIsModalOpen } = useModalStore();
+  const { setIsModalOpen, setShowToast } = useModalStore();
   const [isCancelled, setIsCancelled] = useState(false);
+  const handleErrors = useHandleErrors();
 
   const handleSubscription = async function () {
     try {
-      const response = api.get("/subscribe");
-
-      toast.promise(
-        response,
-        {
-          pending: "Payment link processing",
-          success: "Payment link successfully processed",
-        },
-        { toastId: customId },
-      );
-
-      const { data } = await response;
+      const { data } = await api.get("/subscribe");
 
       if (data.type === "subscription_activated") {
-        toast.success(data.message, {
-          toastId: customId,
-        });
+        setShowToast({ show: true, msg: data.message, type: "msg" });
       } else {
         const paymentLink = data.message;
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 
   const handleCancelSubscription = async function () {
     try {
       setIsCancelled(true);
-      const response = await api.put("subscription/cancel");
-      toast(response.data.message, {
-        toastId: customId,
-      });
+      const { data } = await api.put("subscription/cancel");
+      setShowToast({ show: true, msg: data.message, type: "msg" });
     } catch (error) {
       setIsCancelled(false);
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 

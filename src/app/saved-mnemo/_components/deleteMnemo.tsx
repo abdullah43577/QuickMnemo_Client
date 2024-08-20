@@ -2,12 +2,13 @@
 
 import api from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 
 export const DeleteMnemo = function () {
   const { toBeDeletedMnemonic, setShowToast, setIsModalOpen } = useModalStore();
   const { savedMnemonics, setSavedMnemonics, isAuthenticated } =
     useAuthenticatedState();
+  const handleErrors = useHandleErrors();
 
   const handleDeleteMnemonic = async function () {
     if (!toBeDeletedMnemonic.length) return;
@@ -15,7 +16,7 @@ export const DeleteMnemo = function () {
     const initialState = savedMnemonics;
 
     try {
-      // filter out the deleted mnemonics from the savedMnemonics array
+      //* filter out the deleted mnemonics from the savedMnemonics array
       const filteredMnemonics = savedMnemonics.filter(
         (txt) => txt.toLowerCase() !== toBeDeletedMnemonic.toLowerCase(),
       );
@@ -23,7 +24,7 @@ export const DeleteMnemo = function () {
       setIsModalOpen("close");
 
       if (isAuthenticated) {
-        // send a PUT request to the server to delete the mnemonic from the database
+        //* delete the mnemonic from the database
         const response = await api.put("/delete-mnemonics", {
           txt: toBeDeletedMnemonic,
         });
@@ -31,7 +32,7 @@ export const DeleteMnemo = function () {
         setShowToast({ show: true, msg: response.data.message, type: "msg" });
       }
     } catch (error) {
-      HandleErrors(error);
+      handleErrors(error);
       setSavedMnemonics(initialState);
       setIsModalOpen("open");
     }

@@ -2,14 +2,17 @@
 
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 import api from "../axiosInstance";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 
 export default function Subscription() {
   const { setCurrentModalstep, setIsModalOpen, setShowToast } = useModalStore();
-  const { isPremium } = useAuthenticatedState();
+  const { isPremium, isAuthenticated } = useAuthenticatedState();
+  const handleErrors = useHandleErrors();
 
   const handleSubscription = async function () {
     try {
+      if (!isAuthenticated)
+        throw new Error("You need to be logged in for this!");
       const response = await api.get("/subscribe");
 
       if (response.data.type === "subscription_activated") {
@@ -19,13 +22,13 @@ export default function Subscription() {
         window.open(paymentLink, "_self");
       }
     } catch (error) {
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 
   const handleCancelSubscription = function () {
-    setIsModalOpen("open");
     setCurrentModalstep("Cancel Sub");
+    setIsModalOpen("open");
   };
 
   return (

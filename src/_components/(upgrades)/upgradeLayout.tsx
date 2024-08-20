@@ -14,10 +14,18 @@ import { DeleteMnemo } from "@/app/saved-mnemo/_components/deleteMnemo";
 import VerifyOAuthLogin from "./login/verifyOAuthLogin";
 
 export default function UpgradeLayout() {
-  const { isModalOpen, setIsModalOpen, currentModalStep } = useModalStore();
+  const {
+    isModalOpen,
+    setIsModalOpen,
+    currentModalStep,
+    setCurrentModalstep,
+    previousModalStep,
+  } = useModalStore();
 
   const modalSteps: ModalSteps[] = [
     "Upgrade",
+    "Signup",
+    "Login",
     "VerifyOAuth",
     "Payment",
     "VerifyPayment",
@@ -33,12 +41,14 @@ export default function UpgradeLayout() {
         className={`fixed left-1/2 top-1/2 z-50 w-[90%] max-w-[644px] -translate-x-1/2 -translate-y-1/2 rounded-[25px] bg-white lg:w-auto lg:rounded-[20px] ${isModalOpen ? "block" : "hidden"}`}
       >
         <div
-          className={`mt-5 flex items-center lg:pl-6 ${!modalSteps.includes(currentModalStep) ? "justify-between" : "justify-end"}`}
+          className={`mt-5 flex items-center lg:pl-6 ${!modalSteps.includes(currentModalStep) ? "justify-between lg:ml-[21px] lg:mt-[21px]" : "justify-end"}`}
         >
           {!modalSteps.includes(currentModalStep) && (
             <div
-              className="ml-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:ml-[21px] lg:mt-[21px] lg:size-[50px]"
-              // onClick={() => setIsModalOpen("close")}
+              className="ml-5 flex size-10 cursor-pointer items-center justify-center rounded-full border border-[#EDEAE7] lg:size-[50px]"
+              onClick={() =>
+                setCurrentModalstep(previousModalStep as ModalSteps)
+              }
             >
               <svg
                 width="12"

@@ -39,51 +39,55 @@ export default function SavedMnemonics() {
           </div>
 
           <div className="max-h-[653px] min-h-full overflow-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:p-[64px]">
-            {savedMnemonics.length
-              ? savedMnemonics.map((str, index) => (
-                  <div
-                    key={index}
-                    className={`generated_mnemo_active relative flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-medium leading-[20px] lg:text-xl ${index !== savedMnemonics.length - 1 && "mx-auto mb-[25px]"}`}
-                    onClick={() => handleDeleteMnemonic(str)}
-                  >
-                    <div className="absolute left-0 top-0">
-                      <Image src={ellipse} alt="ellipse" />
+            {savedMnemonics.length ? (
+              savedMnemonics.map((str, index) => (
+                <div
+                  key={index}
+                  className={`generated_mnemo_active relative flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-medium leading-[20px] lg:text-xl ${index !== savedMnemonics.length - 1 && "mx-auto mb-[25px]"}`}
+                  onClick={() => handleDeleteMnemonic(str)}
+                >
+                  <div className="absolute left-0 top-0">
+                    <Image src={ellipse} alt="ellipse" />
 
-                      {/* when not active svg */}
+                    {/* when not active svg */}
 
-                      <svg
-                        width="25"
-                        height="25"
-                        viewBox="0 0 25 25"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="absolute left-[8.2px] top-[10px]"
-                      >
-                        <path
-                          d="M22.6953 9.01251C22.6953 15.575 12.965 20.8869 12.5506 21.1063C12.4414 21.165 12.3193 21.1958 12.1953 21.1958C12.0713 21.1958 11.9492 21.165 11.84 21.1063C11.4256 20.8869 1.69531 15.575 1.69531 9.01251C1.69705 7.47148 2.30999 5.99405 3.39967 4.90437C4.48935 3.81469 5.96678 3.20175 7.50781 3.20001C9.44375 3.20001 11.1388 4.03251 12.1953 5.4397C13.2519 4.03251 14.9469 3.20001 16.8828 3.20001C18.4239 3.20175 19.9013 3.81469 20.991 4.90437C22.0806 5.99405 22.6936 7.47148 22.6953 9.01251Z"
-                          fill="url(#paint0_linear_714_3624)"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_714_3624"
-                            x1="8.19894"
-                            y1="7.46956"
-                            x2="16.3687"
-                            y2="7.46957"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop stopColor="#8338EC" />
-                            <stop offset="1" stopColor="#CB38E7" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
+                    <svg
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="absolute left-[8.2px] top-[10px]"
+                    >
+                      <path
+                        d="M22.6953 9.01251C22.6953 15.575 12.965 20.8869 12.5506 21.1063C12.4414 21.165 12.3193 21.1958 12.1953 21.1958C12.0713 21.1958 11.9492 21.165 11.84 21.1063C11.4256 20.8869 1.69531 15.575 1.69531 9.01251C1.69705 7.47148 2.30999 5.99405 3.39967 4.90437C4.48935 3.81469 5.96678 3.20175 7.50781 3.20001C9.44375 3.20001 11.1388 4.03251 12.1953 5.4397C13.2519 4.03251 14.9469 3.20001 16.8828 3.20001C18.4239 3.20175 19.9013 3.81469 20.991 4.90437C22.0806 5.99405 22.6936 7.47148 22.6953 9.01251Z"
+                        fill="url(#paint0_linear_714_3624)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_714_3624"
+                          x1="8.19894"
+                          y1="7.46956"
+                          x2="16.3687"
+                          y2="7.46957"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#8338EC" />
+                          <stop offset="1" stopColor="#CB38E7" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
 
-                      {/* when active svg */}
-                    </div>
-                    {str}
+                    {/* when active svg */}
                   </div>
-                ))
-              : ""}
+                  {str}
+                </div>
+              ))
+            ) : (
+              <p className="text-center font-medium">
+                You don't have any mnemonics saved at this time
+              </p>
+            )}
           </div>
         </div>
       </div>

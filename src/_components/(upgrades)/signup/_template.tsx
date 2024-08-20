@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/app/axiosInstance";
 import { useModalStore } from "@/hooks/useStore";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const passwordValidationRegex =
@@ -36,6 +36,7 @@ export default function SignUpTemplate() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { setShowToast, setCurrentModalstep } = useModalStore();
   const [isRegistering, setIsRegistering] = useState(false);
+  const HandleErrors = useHandleErrors();
 
   const registerUser = async function ({ email, password }: FormValues) {
     try {
@@ -58,11 +59,11 @@ export default function SignUpTemplate() {
 
   return (
     <form onSubmit={handleSubmit(registerUser)}>
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[25px] lg:text-[40px] lg:leading-[49px] 2xl:mb-[30px] 2xl:text-[48px]">
         Sign up,
       </h2>
 
-      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[40px] lg:leading-[25px]">
+      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[30px] lg:leading-[25px] 2xl:mb-[40px]">
         Sign up with email to continue using QuickMnemo
       </p>
 
@@ -143,7 +144,7 @@ export default function SignUpTemplate() {
 
       <button
         disabled={isRegistering}
-        className={`mb-[25px] mt-[53px] inline-flex h-[60px] w-full items-center justify-center gap-2 rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl ${isRegistering ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
+        className={`mb-[25px] mt-[35px] inline-flex h-[60px] w-full items-center justify-center gap-2 rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl 2xl:mt-[53px] ${isRegistering ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
       >
         <ClipLoader
           color="#fff"

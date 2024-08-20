@@ -4,7 +4,7 @@ import { useModalStore } from "@/hooks/useStore";
 import Link from "next/link";
 
 export default function SignUp() {
-  const { setCurrentModalstep } = useModalStore();
+  const { setCurrentModalstep, setPreviousModalStep } = useModalStore();
 
   return (
     <>
@@ -53,7 +53,10 @@ export default function SignUp() {
 
       <div
         className="mb-[30px] flex h-[60px] w-full cursor-pointer items-center justify-center gap-[7.5px] rounded-[15px] border border-[#EDEAE7] lg:h-[85px]"
-        onClick={() => setCurrentModalstep("SignupTemplate")}
+        onClick={() => {
+          setPreviousModalStep("Signup");
+          setCurrentModalstep("SignupTemplate");
+        }}
       >
         <svg
           width="22"

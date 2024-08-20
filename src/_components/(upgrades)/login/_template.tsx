@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 import Cookies from "js-cookie";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -39,6 +39,7 @@ export default function LoginTemplate() {
   const { setIsAuthenticated } = useAuthenticatedState();
   const { setShowToast } = useModalStore();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const handleErrors = useHandleErrors();
 
   const loginUser = async function ({ email, password }: FormValues) {
     try {
@@ -62,17 +63,17 @@ export default function LoginTemplate() {
       }
     } catch (error) {
       setIsLoggingIn(false);
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(loginUser)}>
-      <h2 className="excon mb-5 max-w-[370.2px] text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[30px] lg:text-[48px] lg:leading-[49px]">
+      <h2 className="excon mb-5 text-[40px] font-bold leading-[36px] -tracking-[5.5%] text-black lg:mb-[25px] lg:text-[40px] lg:leading-[49px] 2xl:mb-[30px] 2xl:text-[48px]">
         Login,
       </h2>
 
-      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[40px] lg:leading-[25px]">
+      <p className="mb-[27.5px] text-base leading-5 md:text-[24px] lg:mb-[30px] lg:leading-[25px] 2xl:mb-[40px]">
         Login with email to continue using QuickMnemo
       </p>
 
@@ -153,7 +154,7 @@ export default function LoginTemplate() {
 
       <button
         disabled={isLoggingIn}
-        className={`mb-[25px] mt-[53px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl ${isLoggingIn ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
+        className={`mb-[25px] mt-[35px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl 2xl:mt-[53px] ${isLoggingIn ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
       >
         <ClipLoader
           color="#fff"

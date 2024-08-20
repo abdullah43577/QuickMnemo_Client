@@ -1,7 +1,7 @@
 import api from "@/app/axiosInstance";
 import { useLayoutEffect } from "react";
 import { useAuthenticatedState } from "./useStore";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 
 interface UserProfile {
   email: string;
@@ -23,6 +23,7 @@ export const useGetProfile = function () {
     setIsAuthenticated,
     setSavedMnemonics,
   } = useAuthenticatedState();
+  const handleErrors = useHandleErrors();
 
   useLayoutEffect(() => {
     if (!isAuthenticated) return;
@@ -37,11 +38,17 @@ export const useGetProfile = function () {
       } catch (error) {
         setIsPremium(false);
         setIsAuthenticated(false);
-        HandleErrors(error);
+        handleErrors(error);
         return {};
       }
     };
 
     getUserProfile();
-  }, [isAuthenticated, setIsPremium, setIsAuthenticated, setSavedMnemonics]);
+  }, [
+    isAuthenticated,
+    setIsPremium,
+    setIsAuthenticated,
+    setSavedMnemonics,
+    handleErrors,
+  ]);
 };

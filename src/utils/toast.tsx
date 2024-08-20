@@ -10,7 +10,7 @@ export const Toast = function () {
   useEffect(() => {
     if (toast) {
       const interval = setInterval(() => {
-        setShowToast({ show: false, msg: toast.msg, type: "" });
+        setShowToast({ show: false, msg: toast.msg, type: toast.type });
       }, 3000);
 
       return () => clearInterval(interval);
@@ -34,7 +34,6 @@ export const Toast = function () {
           y: toast.show ? "-50%" : "-100%",
         }}
         transition={{ duration: 0.5 }}
-        //fixed left-1/2 top-[120px] -translate-x-1/2
         className="relative top-[120px] z-[2000] flex max-h-full items-center gap-[10px] rounded-[33px] border bg-white px-[12.5px] py-[9.5px] shadow-md"
       >
         {toast.type === "error" ? (
@@ -58,37 +57,43 @@ export const Toast = function () {
                 y2="17"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#EC3838" />
+                <stop stopColor="#EC3838" />
                 <stop offset="1" stopColor="#ED9A9A" stopOpacity="0.47" />
               </linearGradient>
             </defs>
           </svg>
         ) : (
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13 25.5C6.09625 25.5 0.5 19.9037 0.5 13C0.5 6.09625 6.09625 0.5 13 0.5C19.9037 0.5 25.5 6.09625 25.5 13C25.5 19.9037 19.9037 25.5 13 25.5ZM11.7537 18L20.5912 9.16125L18.825 7.39375L11.7537 14.465L8.2175 10.9288L6.45 12.6962L11.7537 18Z"
-              fill="url(#paint0_linear_1127_618)"
-            />
-            <defs>
-              <linearGradient
-                id="paint0_linear_1127_618"
-                x1="0.0698441"
-                y1="17.0752"
-                x2="26.3978"
-                y2="10.9275"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop offset="0.15625" stopColor="#C79FFF" stopOpacity="0.47" />
-                <stop offset="0.967477" stopColor="#8338EC" />
-              </linearGradient>
-            </defs>
-          </svg>
+          toast.type === "msg" && (
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 26 26"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13 25.5C6.09625 25.5 0.5 19.9037 0.5 13C0.5 6.09625 6.09625 0.5 13 0.5C19.9037 0.5 25.5 6.09625 25.5 13C25.5 19.9037 19.9037 25.5 13 25.5ZM11.7537 18L20.5912 9.16125L18.825 7.39375L11.7537 14.465L8.2175 10.9288L6.45 12.6962L11.7537 18Z"
+                fill="url(#paint0_linear_1127_618)"
+              />
+              <defs>
+                <linearGradient
+                  id="paint0_linear_1127_618"
+                  x1="0.0698441"
+                  y1="17.0752"
+                  x2="26.3978"
+                  y2="10.9275"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop
+                    offset="0.15625"
+                    stopColor="#C79FFF"
+                    stopOpacity="0.47"
+                  />
+                  <stop offset="0.967477" stopColor="#8338EC" />
+                </linearGradient>
+              </defs>
+            </svg>
+          )
         )}
 
         <span className="font-[500] leading-5 text-black md:text-[24px] lg:leading-[25px]">

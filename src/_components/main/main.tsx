@@ -38,21 +38,10 @@ export default function WindowMain() {
       isAuthenticated &&
       !flw_status?.length &&
       !flw_tx_ref?.length &&
-      !flw_transact_id?.length
+      !flw_transact_id?.length &&
+      !isPremium
     ) {
       setCurrentModalstep("Payment");
-      setIsModalOpen("open");
-      return;
-    }
-
-    // * VERIFY PAYMENT MADE ON REDIRECT
-    if (
-      isAuthenticated &&
-      flw_status?.length &&
-      flw_tx_ref?.length &&
-      flw_transact_id?.length
-    ) {
-      setCurrentModalstep("VerifyPayment");
       setIsModalOpen("open");
       return;
     }
@@ -69,14 +58,11 @@ export default function WindowMain() {
   }, [
     isAuthenticated,
     isPremium,
-    setIsModalOpen,
-    setCurrentModalstep,
     isSuccessShownAlready,
-    setIsSuccessShownAlready,
-    token?.length,
-    flw_status?.length,
-    flw_tx_ref?.length,
-    flw_transact_id?.length,
+    token,
+    flw_status,
+    flw_tx_ref,
+    flw_transact_id,
   ]);
 
   useOAuthValidation(token);

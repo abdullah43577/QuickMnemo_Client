@@ -20,6 +20,8 @@ interface ModalState {
   setIsModalOpen: (arg: "open" | "close") => void;
   currentModalStep: ModalSteps;
   setCurrentModalstep: (arg: ModalSteps) => void;
+  previousModalStep: ModalSteps | "";
+  setPreviousModalStep: (arg: ModalSteps) => void;
   toast: {
     show: boolean;
     msg: string;
@@ -43,6 +45,8 @@ export const useModalStore = create<ModalState>()((set) => ({
   currentModalStep: "Upgrade",
   setCurrentModalstep: (arg) =>
     set((state) => ({ currentModalStep: (state.currentModalStep = arg) })),
+  previousModalStep: "",
+  setPreviousModalStep: (arg) => set((_) => ({ previousModalStep: arg })),
   toast: { show: false, msg: "", type: "" },
   toBeDeletedMnemonic: "",
   setShowToast: (arg) => set((_) => ({ toast: arg })),

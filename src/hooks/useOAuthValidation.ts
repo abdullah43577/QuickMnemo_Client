@@ -2,18 +2,18 @@ import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "./useStore";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 import Cookies from "js-cookie";
 
 export const useOAuthValidation = function (token: string | null) {
   const { setIsAuthenticated } = useAuthenticatedState();
   const { setShowToast, setCurrentModalstep, setIsModalOpen } = useModalStore();
   const router = useRouter();
-  const [hasValidated, setHasValidated] = useState(false);
+  const handleErrors = useHandleErrors();
 
   useEffect(() => {
     //* VALIDATE GOOGLE LOGIN
-    if (token?.length && !hasValidated) {
+    if (token?.length) {
       const validateOAuthSession = async function () {
         try {
           setCurrentModalstep("VerifyOAuth");
@@ -46,22 +46,11 @@ export const useOAuthValidation = function (token: string | null) {
             return () => clearTimeout(timeout);
           }
         } catch (error) {
-          HandleErrors(error);
-        } finally {
-          // Mark the validation as done to prevent re-execution
-          setHasValidated(true);
+          handleErrors(error);
         }
       };
 
       validateOAuthSession();
     }
-  }, [
-    router,
-    token,
-    setIsAuthenticated,
-    hasValidated,
-    setShowToast,
-    setCurrentModalstep,
-    setIsModalOpen,
-  ]);
+  }, [token]);
 };

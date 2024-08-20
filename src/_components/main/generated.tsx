@@ -4,9 +4,8 @@ import Image from "next/image";
 import ellipse from "../../../public/ellipse.png";
 import { useEffect, useState } from "react";
 import api from "@/app/axiosInstance";
-import { toast } from "react-toastify";
-import { useAuthenticatedState } from "@/hooks/useStore";
-import { HandleErrors } from "@/utils/handleErrors";
+import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 
 interface Mnemonics {
   id: number;
@@ -26,6 +25,8 @@ export function GeneratedMnemonics() {
     { id: 7, title: "Roman Swiftly Raced Zebras", isClicked: false },
   ]);
   const { setSavedMnemonics, isAuthenticated } = useAuthenticatedState();
+  const { setShowToast } = useModalStore();
+  const handleErrors = useHandleErrors();
 
   const handleMnemoClick = function (index: number) {
     setMnemo((prevValue) =>
@@ -40,9 +41,10 @@ export function GeneratedMnemonics() {
       const response = await api.put("/save-mnemonics", {
         savedMnemonics,
       });
-      if (response.status === 200) toast.success(response.data.message);
+      if (response.status === 200)
+        setShowToast({ show: true, msg: response.data.message, type: "msg" });
     } catch (error) {
-      HandleErrors(error);
+      handleErrors(error);
     }
   };
 
