@@ -24,7 +24,7 @@ export const Toast = function () {
         opacity: toast.show ? 1 : 0,
         visibility: toast.show ? "visible" : "hidden",
       }}
-      className="absolute left-0 top-0 z-[1000] flex h-full w-full items-start justify-center bg-overlay"
+      className="fixed left-0 top-0 z-[1000] flex h-full w-full items-start justify-center bg-overlay"
     >
       <motion.div
         initial={{ opacity: 0, visibility: "hidden", y: "-100%" }}
