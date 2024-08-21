@@ -1,8 +1,10 @@
 export default function PrivacyPolicty() {
   return (
-    <section>
-      <div className="mx-auto max-w-[1116px] rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:p-[64px]">
-        <h2 className="text-center text-4xl font-medium">Privacy Policy</h2>
+    <section className="p-5 pt-[18px] lg:p-[64px] lg:pt-[43px]">
+      <div className="mx-auto w-full max-w-[1116px] rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:p-[64px]">
+        <h2 className="text-center text-2xl font-medium xl:text-4xl">
+          Privacy Policy
+        </h2>
         <p className="italic">Last Updated: Wednesday Aug 21, 2024</p>
 
         <div className="mt-4 space-y-4">
