@@ -14,38 +14,37 @@ export const usePaymentValidation = function (
   const router = useRouter();
   const handleErrors = useHandleErrors();
 
-  useEffect(() => {
-    if (flw_status?.length && flw_tx_ref?.length && flw_transact_id?.length) {
-      // * VERIFY PAYMENT MADE ON REDIRECT
-      const validatePayment = async function () {
-        if (isAuthenticated) {
-          setCurrentModalstep("VerifyPayment");
-          setIsModalOpen("open");
-        }
-        try {
-          const response = await api.post("/subscribe/callback", {
-            status: flw_status,
-            tx_ref: flw_tx_ref,
-            transaction_id: flw_transact_id,
-          });
-
-          if (response.status === 200) {
-            setShowToast({
-              show: true,
-              msg: response.data.message,
-              type: "msg",
-            });
-            setIsPremium(true);
-
-            const timeout = setTimeout(() => router.push("/"), 2000);
-            return () => clearTimeout(timeout);
-          }
-        } catch (error) {
-          handleErrors(error);
-        }
-      };
-
-      validatePayment();
+  // * VERIFY PAYMENT MADE ON REDIRECT
+  const validatePayment = async function () {
+    if (isAuthenticated) {
+      setCurrentModalstep("VerifyPayment");
+      setIsModalOpen("open");
     }
+    try {
+      const response = await api.post("/subscribe/callback", {
+        status: flw_status,
+        tx_ref: flw_tx_ref,
+        transaction_id: flw_transact_id,
+      });
+
+      if (response.status === 200) {
+        setShowToast({
+          show: true,
+          msg: response.data.message,
+          type: "msg",
+        });
+        setIsPremium(true);
+
+        const timeout = setTimeout(() => router.push("/"), 2000);
+        return () => clearTimeout(timeout);
+      }
+    } catch (error) {
+      handleErrors(error);
+    }
+  };
+
+  useEffect(() => {
+    if (flw_status?.length && flw_tx_ref?.length && flw_transact_id?.length)
+      validatePayment();
   }, [flw_status, flw_tx_ref, flw_transact_id]);
 };

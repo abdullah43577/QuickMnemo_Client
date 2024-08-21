@@ -15,12 +15,8 @@ export default function WindowMain() {
   const flw_tx_ref = searchParams.get("tx_ref");
   const flw_transact_id = searchParams.get("transaction_id");
 
-  useOAuthValidation(token?.length ? token : "");
-  usePaymentValidation(
-    flw_status?.length ? flw_status : "",
-    flw_tx_ref?.length ? flw_tx_ref : "",
-    flw_transact_id?.length ? flw_transact_id : "",
-  );
+  useOAuthValidation(token);
+  usePaymentValidation(flw_status, flw_tx_ref, flw_transact_id);
 
   const {
     isAuthenticated,
@@ -32,7 +28,7 @@ export default function WindowMain() {
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
 
   //* CONDITIONALLY RENDER CURRENT WINDOW STEP
-  useEffect(() => {
+  const renderWindow = function () {
     // * IF GOOGLE VERIFICATION TOKEN IN URL
     if (token?.length) {
       setCurrentModalstep("VerifyOAuth");
@@ -62,6 +58,10 @@ export default function WindowMain() {
         setIsModalOpen("open");
       }
     }
+  };
+
+  useEffect(() => {
+    renderWindow();
   }, [
     isAuthenticated,
     isPremium,
