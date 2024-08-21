@@ -4,7 +4,7 @@ import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
 import { FormEvent, useLayoutEffect, useState } from "react";
 
 export function GenerateMnemonics() {
-  const { isPremium } = useAuthenticatedState();
+  const { isAuthenticated, isPremium } = useAuthenticatedState();
   const { setIsModalOpen, setCurrentModalstep, setShowToast } = useModalStore();
   const [categories, setCategories] = useState([
     {
@@ -126,7 +126,7 @@ export function GenerateMnemonics() {
           className="relative mb-[37.43px] hidden h-[95.11px] cursor-pointer items-center overflow-hidden rounded-[15px] border border-[#EDEAE7] md:flex"
           onClick={() => {
             setIsModalOpen("open");
-            setCurrentModalstep("Upgrade");
+            setCurrentModalstep(isAuthenticated ? "Payment" : "Upgrade");
           }}
         >
           <span className="max-w-[272px] bg-gradient-to-r from-[#8338EC] to-[#CB38E7] bg-clip-text pl-[26px] text-[24px] leading-[26px] text-transparent">
@@ -176,7 +176,7 @@ export function GenerateMnemonics() {
           className="mb-[26px] flex cursor-pointer items-center justify-center gap-[4.33px] md:hidden"
           onClick={() => {
             setIsModalOpen("open");
-            setCurrentModalstep("Upgrade");
+            setCurrentModalstep(isAuthenticated ? "Payment" : "Upgrade");
           }}
         >
           <svg
