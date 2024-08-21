@@ -154,7 +154,7 @@ export default function LoginTemplate() {
 
       <button
         disabled={isLoggingIn}
-        className={`mb-[25px] mt-[35px] h-[60px] w-full rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl 2xl:mt-[53px] ${isLoggingIn ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
+        className={`mb-[25px] mt-[35px] inline-flex h-[60px] w-full items-center justify-center gap-2 rounded-[15px] border text-base font-medium text-white hover:bg-[#4D10A3] lg:text-xl 2xl:mt-[53px] ${isLoggingIn ? "bg-[#4D10A3]" : "border-btnBorder bg-CTA"}`}
       >
         <ClipLoader
           color="#fff"

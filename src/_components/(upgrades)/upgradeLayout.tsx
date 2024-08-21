@@ -83,7 +83,7 @@ export default function UpgradeLayout() {
           </div>
         </div>
 
-        <div className="p-5 lg:pb-[58px] lg:pl-[57px] lg:pr-[58px] lg:pt-0">
+        <div className="p-5 md:pb-[58px] md:pl-[57px] md:pr-[58px] md:pt-0">
           {currentModalStep === "Upgrade" && <Upgrade />}
           {currentModalStep === "Signup" && <SignUp />}
           {currentModalStep === "SignupTemplate" && <SignUpTemplate />}

@@ -18,12 +18,7 @@ export default function WindowMain() {
   useOAuthValidation(token);
   usePaymentValidation(flw_status, flw_tx_ref, flw_transact_id);
 
-  const {
-    isAuthenticated,
-    isPremium,
-    isSuccessShownAlready,
-    setIsSuccessShownAlready,
-  } = useAuthenticatedState();
+  const { isAuthenticated, isPremium } = useAuthenticatedState();
 
   const { setIsModalOpen, setCurrentModalstep } = useModalStore();
 
@@ -37,6 +32,7 @@ export default function WindowMain() {
     }
 
     // * IF USER HAS SUCCESSFULLY LOGGED IN
+    // * if you remove the flw_... it might conflict with the code in usePaymentValidation hook
     if (
       isAuthenticated &&
       !flw_status?.length &&
@@ -50,13 +46,8 @@ export default function WindowMain() {
     }
 
     if (isAuthenticated && isPremium) {
-      if (isSuccessShownAlready) {
-        return setIsModalOpen("close");
-      } else {
-        setIsSuccessShownAlready(true);
-        setCurrentModalstep("Success");
-        setIsModalOpen("open");
-      }
+      console.log("i ran");
+      return setIsModalOpen("close");
     }
   };
 
@@ -65,7 +56,6 @@ export default function WindowMain() {
   }, [
     isAuthenticated,
     isPremium,
-    isSuccessShownAlready,
     token,
     flw_status,
     flw_tx_ref,

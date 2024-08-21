@@ -25,30 +25,22 @@ export const useGetProfile = function () {
   } = useAuthenticatedState();
   const handleErrors = useHandleErrors();
 
-  useLayoutEffect(() => {
-    if (!isAuthenticated) return;
-
-    const getUserProfile = async () => {
-      try {
-        const response = await api.get<UserProfile>("/user-info");
-        if (response.data.isPremium) {
-          setIsPremium(true);
-          setSavedMnemonics(response.data.savedMnemonics);
-        }
-      } catch (error) {
-        setIsPremium(false);
-        setIsAuthenticated(false);
-        handleErrors(error);
-        return {};
+  const getUserProfile = async () => {
+    try {
+      const response = await api.get<UserProfile>("/user-info");
+      if (response.data.isPremium) {
+        setIsPremium(true);
+        setSavedMnemonics(response.data.savedMnemonics);
       }
-    };
+    } catch (error) {
+      setIsPremium(false);
+      setIsAuthenticated(false);
+      handleErrors(error);
+      return {};
+    }
+  };
 
-    getUserProfile();
-  }, [
-    isAuthenticated,
-    setIsPremium,
-    setIsAuthenticated,
-    setSavedMnemonics,
-    handleErrors,
-  ]);
+  useLayoutEffect(() => {
+    if (isAuthenticated) getUserProfile();
+  }, [isAuthenticated]);
 };

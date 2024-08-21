@@ -4,6 +4,7 @@ import { useModalStore } from "@/hooks/useStore";
 
 export default function Success() {
   const { setIsModalOpen } = useModalStore();
+
   return (
     <div className="p-5 lg:pb-[58px] lg:pl-[57px] lg:pr-[58px] lg:pt-0">
       <svg

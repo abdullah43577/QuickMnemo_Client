@@ -68,11 +68,9 @@ export const useHeaderState = create<HeaderState>()((set) => ({
 interface Authenticated {
   isAuthenticated: boolean;
   isPremium: boolean;
-  isSuccessShownAlready: boolean;
   savedMnemonics: string[];
   setIsAuthenticated: (auth: boolean) => void;
   setIsPremium: (arg: boolean) => void;
-  setIsSuccessShownAlready: (arg: boolean) => void;
   setSavedMnemonics: (arg: string[]) => void;
 }
 export const useAuthenticatedState = create<Authenticated>()(
@@ -80,15 +78,12 @@ export const useAuthenticatedState = create<Authenticated>()(
     (set) => ({
       isAuthenticated: false,
       isPremium: false,
-      isSuccessShownAlready: false,
       savedMnemonics: [],
       setIsAuthenticated: (auth) =>
         set((state) => ({
           isAuthenticated: (state.isAuthenticated = auth),
         })),
       setIsPremium: (arg) => set((_) => ({ isPremium: arg })),
-      setIsSuccessShownAlready: (arg) =>
-        set((_) => ({ isSuccessShownAlready: arg })),
       setSavedMnemonics: (arg) => set((_) => ({ savedMnemonics: arg })),
     }),
 
