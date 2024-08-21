@@ -1,6 +1,6 @@
 import api, { accessTokenExpiration } from "@/app/axiosInstance";
 import { useAuthenticatedState, useModalStore } from "./useStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useHandleErrors } from "@/utils/useHandleErrors";
 import Cookies from "js-cookie";

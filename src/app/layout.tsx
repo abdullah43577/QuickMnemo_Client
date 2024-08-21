@@ -20,6 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/icon.png" sizes="any" />
+        <meta
+          name="google-site-verification"
+          content="nKobNBqvjF1JMdp12MfPQdhPiF3PyC3llyGrLzmTbcc"
+        />
       </head>
       <body className="relative pb-[52px]" suppressHydrationWarning={true}>
         <Header />
