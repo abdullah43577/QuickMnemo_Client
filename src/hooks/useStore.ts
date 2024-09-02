@@ -64,6 +64,42 @@ export const useHeaderState = create<HeaderState>()((set) => ({
     set((state) => ({ isScrolled: (state.isScrolled = arg) })),
 }));
 
+interface Mnemonics {
+  mnemo: {
+    id: number;
+    title: string;
+    isClicked: boolean;
+  }[];
+  handleMnemoClick: (index: number) => void;
+  setMnemo: (arg: string[]) => void;
+}
+[];
+
+export const useMnemoState = create<Mnemonics>()((set) => ({
+  mnemo: [],
+  handleMnemoClick: (index) =>
+    set((state) => {
+      if (!state.mnemo.length) return { mnemo: [] };
+
+      const updatedMnemo = state.mnemo.map((item) =>
+        item.id === index ? { ...item, isClicked: !item.isClicked } : item,
+      );
+
+      return { mnemo: updatedMnemo };
+    }),
+  setMnemo: (arg) =>
+    set((_) => {
+      //* format array of strings
+      const formattedData = arg.map((item, i) => ({
+        id: i,
+        title: item,
+        isClicked: false,
+      }));
+
+      return { mnemo: formattedData };
+    }),
+}));
+
 // persisted state
 interface Authenticated {
   isAuthenticated: boolean;

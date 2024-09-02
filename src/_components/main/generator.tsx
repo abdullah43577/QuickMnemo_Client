@@ -1,11 +1,29 @@
 "use client";
 
-import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
+import api, { CustomAxiosRequestConfig } from "@/app/axiosInstance";
+import {
+  useAuthenticatedState,
+  useMnemoState,
+  useModalStore,
+} from "@/hooks/useStore";
+import { useHandleErrors } from "@/utils/useHandleErrors";
 import { FormEvent, useLayoutEffect, useState } from "react";
+
+interface MnemonicReq {
+  keyLetters: string;
+  mnemonicType: string;
+  reqType?: "mnemonic";
+}
+
+interface GeneratedMnemoResponse {
+  message: string;
+  mnemonic: string[];
+}
 
 export function GenerateMnemonics() {
   const { isAuthenticated, isPremium } = useAuthenticatedState();
   const { setIsModalOpen, setCurrentModalstep, setShowToast } = useModalStore();
+  const { setMnemo } = useMnemoState();
   const [categories, setCategories] = useState([
     {
       title: "Simple",
@@ -16,6 +34,8 @@ export function GenerateMnemonics() {
     { title: "Funny", isLocked: true, isSelected: false },
   ]);
   const [inputValue, setInputValue] = useState("");
+  const handleErrors = useHandleErrors();
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleClick = function (key: string) {
     setCategories((prevValue) =>
@@ -48,13 +68,43 @@ export function GenerateMnemonics() {
     const ERROR_MSG = isPremium
       ? "You've hit the character limit"
       : "Upgrade to unlock more characters";
-    if (value.length > CHAR_LIMIT)
-      return setShowToast({
-        show: true,
-        msg: ERROR_MSG,
-        type: "error",
-      });
+    if (value.length > CHAR_LIMIT) return handleErrors({ message: ERROR_MSG });
     setInputValue(value);
+  };
+
+  const handleGenerateMnemonics = async function () {
+    if (!inputValue.length)
+      return handleErrors({ message: "Please enter your key-letters" });
+
+    const selectedCategory = categories.find((category) => category.isSelected);
+
+    if (selectedCategory === undefined)
+      return handleErrors({ message: "Please select a category" });
+
+    let requestType: MnemonicReq = {
+      keyLetters: inputValue,
+      mnemonicType: selectedCategory.title, //* selected category
+    };
+
+    if (!isAuthenticated) requestType.reqType = "mnemonic"; //* append this conditionally if user is authenticated i.e user already has an account
+
+    try {
+      setIsGenerating(true);
+      const { data } = await api.post<GeneratedMnemoResponse>(
+        "/generate-mnemonics",
+        {
+          ...requestType,
+        },
+        {
+          skipAuth: true,
+        } as CustomAxiosRequestConfig,
+      );
+      setMnemo(data.mnemonic);
+      setIsGenerating(false);
+    } catch (error) {
+      handleErrors(error);
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -198,7 +248,27 @@ export function GenerateMnemonics() {
         </div>
       )}
 
-      <button className="h-[50px] w-full rounded-[15px] border border-btnBorder bg-CTA text-base font-medium text-white lg:h-[62.07px] lg:text-xl">
+      <button
+        className="flex h-[50px] w-full items-center justify-center gap-2 rounded-[15px] border border-btnBorder bg-CTA text-base font-medium text-white lg:h-[62.07px] lg:text-xl"
+        onClick={handleGenerateMnemonics}
+        disabled={isGenerating}
+      >
+        {isGenerating && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-loader-circle animate-spin"
+          >
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+        )}
         Start generator
       </button>
     </aside>

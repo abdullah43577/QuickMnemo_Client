@@ -1,5 +1,9 @@
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
+
+export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  skipAuth?: boolean;
+}
 
 const accessTokenExpiration = new Date();
 accessTokenExpiration.setTime(accessTokenExpiration.getTime() + 30 * 60 * 1000); // expires in 30mins
@@ -11,7 +15,12 @@ const api = axios.create({
 
 // Request interceptor to include the latest access token
 api.interceptors.request.use(
-  (config) => {
+  (config: CustomAxiosRequestConfig) => {
+    // Skip token logic if `skipAuth` is true
+    if (config.skipAuth) {
+      return config;
+    }
+
     const token = Cookies.get("session_id");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -28,6 +37,11 @@ api.interceptors.response.use(
   (response) => response, // If the response is successful, just return it
   async (error) => {
     const originalRequest = error.config;
+
+    // Skip token refresh logic if `skipAuth` is true
+    if (originalRequest.skipAuth) {
+      return Promise.reject(error);
+    }
 
     // Check if the error status is 401 or a specific status indicating token expiration
     if (error.response.status === 401 && !originalRequest._retry) {

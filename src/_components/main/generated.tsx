@@ -4,37 +4,19 @@ import Image from "next/image";
 import ellipse from "../../../public/ellipse.png";
 import { useEffect, useState } from "react";
 import api from "@/app/axiosInstance";
-import { useAuthenticatedState, useModalStore } from "@/hooks/useStore";
+import {
+  useAuthenticatedState,
+  useMnemoState,
+  useModalStore,
+} from "@/hooks/useStore";
 import { useHandleErrors } from "@/utils/useHandleErrors";
 
-interface Mnemonics {
-  id: number;
-  title: string;
-  isClicked: boolean;
-}
-
 export function GeneratedMnemonics() {
-  const [mnemo, setMnemo] = useState<Mnemonics[]>([
-    { id: 0, title: "Harry Swiftly Raced Zebras", isClicked: false },
-    { id: 1, title: "John Swiftly Raced Zebras", isClicked: false },
-    { id: 2, title: "Potter Swiftly Raced Zebras", isClicked: false },
-    { id: 3, title: "Johson Swiftly Raced Zebras", isClicked: false },
-    { id: 4, title: "Johanna Swiftly Raced Zebras", isClicked: false },
-    { id: 5, title: "Abdul Swiftly Raced Zebras", isClicked: false },
-    { id: 6, title: "Ayoola Swiftly Raced Zebras", isClicked: false },
-    { id: 7, title: "Roman Swiftly Raced Zebras", isClicked: false },
-  ]);
+  const { mnemo, handleMnemoClick } = useMnemoState();
+
   const { setSavedMnemonics, isAuthenticated } = useAuthenticatedState();
   const { setShowToast } = useModalStore();
   const handleErrors = useHandleErrors();
-
-  const handleMnemoClick = function (index: number) {
-    setMnemo((prevValue) =>
-      prevValue.map((item) =>
-        item.id === index ? { ...item, isClicked: !item.isClicked } : item,
-      ),
-    );
-  };
 
   const saveMnemoToDB = async function (savedMnemonics: string[]) {
     try {
@@ -63,7 +45,7 @@ export function GeneratedMnemonics() {
 
       return () => clearTimeout(timeout);
     }
-  }, [mnemo, setSavedMnemonics, isAuthenticated]);
+  }, [mnemo]);
 
   return (
     <aside className="max-h-[200px] w-full overflow-scroll pr-1 lg:max-h-full lg:w-auto">
@@ -71,7 +53,7 @@ export function GeneratedMnemonics() {
         ? mnemo.map((obj, index) => (
             <div
               key={index}
-              className={`relative ${index !== mnemo.length - 1 && "mb-[25px]"} flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-[500] leading-[20px] lg:w-[440px] lg:text-xl ${obj.isClicked && "generated_mnemo_active"}`}
+              className={`relative ${index !== mnemo.length - 1 && "mb-[25px]"} flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate text-wrap rounded-[15px] border border-[#EDEAE7] text-center font-[500] leading-[20px] lg:w-[440px] lg:text-xl ${obj.isClicked && "generated_mnemo_active"}`}
               onClick={() => handleMnemoClick(index)}
             >
               <div className="absolute left-0 top-0">
@@ -147,7 +129,7 @@ export function GeneratedMnemonics() {
         : Array.from({ length: 5 }).map((obj, index) => (
             <div
               key={index}
-              className="relative mb-[25px] flex h-[85px] cursor-pointer items-center justify-center overflow-hidden truncate rounded-[15px] border border-[#EDEAE7] font-[500] leading-[20px] lg:w-[440px] lg:text-xl"
+              className="relative mb-[25px] flex h-[85px] cursor-pointer items-center justify-center overflow-hidden rounded-[15px] border border-[#EDEAE7] font-[500] leading-[20px] lg:w-[440px] lg:text-xl"
             >
               <div className="absolute left-0 top-0">
                 <Image src={ellipse} alt="ellipse" />
@@ -165,12 +147,14 @@ export function GeneratedMnemonics() {
                   />
                 </svg>
               </div>
+              {/* loader */}
               <svg
                 width="196"
                 height="18"
                 viewBox="0 0 196 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="animate-pulse"
               >
                 <rect
                   x="0.713379"
