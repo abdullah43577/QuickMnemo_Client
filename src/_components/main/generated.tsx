@@ -53,8 +53,9 @@ export function GeneratedMnemonics() {
 
   return (
     // max-h-[200px]
-    <aside className="relative h-5 max-h-[200px] w-full overflow-scroll pr-1 md:h-full md:min-w-[440px] lg:max-h-full lg:w-auto xl:max-h-full">
-
+    <aside
+      className={`relative h-5 max-h-[200px] w-full overflow-scroll pr-1 md:h-full md:min-w-[440px] lg:max-h-full lg:w-auto xl:max-h-full ${!mnemo.length && !isGenerating ? "py-6 lg:py-0" : ""}`}
+    >
       {isGenerating
         ? Array.from({ length: 5 }).map((obj, index) => (
             <div
@@ -100,7 +101,7 @@ export function GeneratedMnemonics() {
           ))}
 
       {!mnemo.length && !isGenerating && (
-        <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:text-xl">
+        <p className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 text-center lg:text-xl">
           "Your Mnemonics Here"
         </p>
       )}
