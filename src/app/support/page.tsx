@@ -1,3 +1,5 @@
+import { Container } from "@/_components/ui/Container";
+
 export default function Support() {
-  return <div>this is the support page</div>;
+  return <Container className="">this is the support page</Container>;
 }

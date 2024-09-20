@@ -72,6 +72,8 @@ interface Mnemonics {
   }[];
   handleMnemoClick: (index: number) => void;
   setMnemo: (arg: string[]) => void;
+  isGenerating: boolean;
+  setIsGenerating: (arg: boolean) => void;
 }
 [];
 
@@ -98,6 +100,8 @@ export const useMnemoState = create<Mnemonics>()((set) => ({
 
       return { mnemo: formattedData };
     }),
+  isGenerating: false,
+  setIsGenerating: (arg) => set((_) => ({ isGenerating: arg })),
 }));
 
 // persisted state

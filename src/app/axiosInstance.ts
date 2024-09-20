@@ -6,7 +6,7 @@ export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 const accessTokenExpiration = new Date();
-accessTokenExpiration.setTime(accessTokenExpiration.getTime() + 30 * 60 * 1000); // expires in 30mins
+accessTokenExpiration.setTime(accessTokenExpiration.getTime() + 30 * 60 * 1000); //* expires in 30mins
 export { accessTokenExpiration };
 
 const api = axios.create({

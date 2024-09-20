@@ -1,6 +1,7 @@
 "use client";
 
 import WindowMain from "@/_components/main/main";
+import { Container } from "@/_components/ui/Container";
 import { useHeaderState } from "@/hooks/useStore";
 
 export default function Home() {
@@ -8,9 +9,9 @@ export default function Home() {
 
   return (
     <main>
-      <section
-        // the headers height + 53px
-        className={`mx-auto max-w-[1440px] px-5 2xl:px-[162px] ${isScrolled ? "pt-[152px]" : "pt-[53px]"}`}
+      <Container
+        // the headers height + 53px 2xl:px-[162px]
+        className={isScrolled ? "pt-[152px]" : "pt-[53px]"}
       >
         <h1 className="excon mx-auto mb-[25px] text-center text-[40px] font-bold leading-[36px] tracking-[-5.5%] text-black md:text-[48px]">
           Your
@@ -27,7 +28,7 @@ export default function Home() {
         </p>
 
         <WindowMain />
-      </section>
+      </Container>
     </main>
   );
 }

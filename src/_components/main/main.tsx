@@ -46,7 +46,6 @@ export default function WindowMain() {
     }
 
     if (isAuthenticated && isPremium) {
-      console.log("i ran");
       return setIsModalOpen("close");
     }
   };
@@ -64,7 +63,7 @@ export default function WindowMain() {
 
   return (
     <>
-      <section className="mx-auto flex max-w-[1116px] flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:h-[680px] lg:flex-row lg:overflow-hidden lg:p-[64px] 2xl:h-[680px]">
+      <section className="relative mx-auto flex flex-col-reverse items-center gap-[53.5px] overflow-y-scroll rounded-[35px] border border-[#EDEAE7] p-5 shadow-mainDrop lg:h-[680px] lg:flex-row lg:overflow-hidden lg:p-[64px] 2xl:h-[680px]">
         <GenerateMnemonics />
 
         <div className="rotate-360 h-[1px] w-full bg-[#EDEDED] lg:h-full lg:w-[1px] lg:rotate-0" />
